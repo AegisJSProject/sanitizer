@@ -37,7 +37,7 @@ export function setHTML(el, content, { sanitizer = sanitizerConfig } = {}) {
 }
 
 export function parseHTML(content, { sanitizer = sanitizerConfig } = {}) {
-	const doc = new DOMParser().parseFromString(content, 'text/html');
+	const doc = new DOMParser().parseFromString(policy.createHTML(content), 'text/html');
 	sanitize(doc, sanitizer);
 	return doc;
 }
