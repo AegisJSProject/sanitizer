@@ -105,9 +105,27 @@ export function convertConfig(config, {
 	elementNS = HTMLNS,
 	attributeNS = '',
 } = {}) {
-	return Object.freeze({
-		elements: convertElementConfig(config, elementNS),
-		attributes: convertAttrConfig(config, attributeNS),
-		comments: normalizeCommentsConfig(config),
-	});
+	if (typeof config !== 'object' || config === null) {
+		throw new TypeError('Sanitizer config must be an object.');
+	} else if (config.getConfiguration instanceof Function) {
+		console.warn('`Sanitzer` objects are deprecated and will be removed.');
+
+		const {
+			allowElements: elements,
+			allowAttributes: attributes,
+			allowComments: comments,
+		} = config.getConfiguration();
+
+		return Object.freeze({
+			elements: convertElementConfig({ elements }, elementNS),
+			attributes: convertAttrConfig({ attributes }, attributeNS),
+			comments,
+		});
+	} else {
+		return Object.freeze({
+			elements: convertElementConfig(config, elementNS),
+			attributes: convertAttrConfig(config, attributeNS),
+			comments: normalizeCommentsConfig(config),
+		});
+	}
 }

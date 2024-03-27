@@ -33,7 +33,7 @@ export function setHTML(el, content, { sanitizer = sanitizerConfig } = {}) {
 	const tmp = document.createElement('template');
 	tmp.innerHTML = policy.createHTML(content);
 	sanitize(tmp.content, sanitizer);
-	el.append(tmp.content);
+	el.replaceChildren(tmp.content);
 }
 
 export function parseHTML(content, { sanitizer = sanitizerConfig } = {}) {
