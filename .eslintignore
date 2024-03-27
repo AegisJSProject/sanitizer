@@ -5,5 +5,7 @@
 /fonts/
 /js/std-js/
 /js/svg4everybody/
+*.cjs
+*.mjs
 *.min.js
 *.out.js

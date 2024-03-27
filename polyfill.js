@@ -1,5 +1,10 @@
 import { setHTML as html, parseHTML as parse } from './sanitize.js';
-import { sanitizerConfig, elements as els, attributes as attrs, comments as cmnts } from './config/html.js';
+import {
+	sanitizer as sanitizerConfig,
+	elements as els,
+	attributes as attrs,
+	comments as cmnts
+} from './config/html.js';
 
 /**
  * This is needed for working with sanitizer configs & arrts
