@@ -1,7 +1,9 @@
 *.cjs
+*.mjs
 *.min.*
 *.map
 *.bak
+config/*.json
 *.gz
 *.tgz
 .env
