@@ -1,4 +1,4 @@
-import { sanitizerConfig } from './config/html.js';
+import { sanitizer as sanitizerConfig } from './config/html.js';
 import { convertConfig, EVENT_ATTRS } from './config-utils.js';
 
 const LINK_ATTRS = new Set(['href', 'src' , 'action']);

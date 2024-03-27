@@ -248,7 +248,7 @@ export const attributes = Object.freeze([
 	'wrap',
 ].map(attr => normalizeAttr(attr)).concat(globalAttrs));
 
-export const sanitizerConfig = Object.freeze({
+export const sanitizer = Object.freeze({
 	allowCustomElements, allowUnknownMarkup, comments, elements,
 	attributes,
 });

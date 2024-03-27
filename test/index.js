@@ -1,5 +1,5 @@
 import '@aegisjsproject/sanitizer/polyfill.js';
-import { sanitizerConfig as sanitizer } from '@aegisjsproject/sanitizer/config/all.js';
+import { sanitizer } from '@aegisjsproject/sanitizer/config/all.js';
 
 const file = new File(['This should be allowed'], 'allowed.txt', { type: 'text/plain' });
 

@@ -71,4 +71,4 @@ export const attributes = Object.freeze([
 	'autoReverse', 'accelerate',
 ].map(attr => normalizeAttr(attr,'')).concat(globalAttrs));
 
-export const sanitizerConfig = Object.freeze({ elements, attributes, comments });
+export const sanitizer = Object.freeze({ elements, attributes, comments });
