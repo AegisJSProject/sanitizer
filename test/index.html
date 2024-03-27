@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="color-scheme" content="light dark" />
+		<meta http-equiv="Content-Security-Policy"
+			content="default-src 'none';
+			script-src 'self' https://unpkg.com/@shgysk8zer0/ https://unpkg.com/@aegisjsproject/ 'sha384-bBiwhxhM6vzcvoHlU0g96dptcCuKwTMWE0DXmYWZvMlBP/0xeaYqjyu0r3MBVO2c';
+			style-src 'self' blob: data:;
+			connect-src https://icanhazdadjoke.com https://unpkg.com/@shgysk8zer0/ https://unpkg.com/@kernvalley/;
+			trusted-types empty#html empty#script sanitizer-raw#html default;
+			require-trusted-types-for 'script';" />
+		<title>Aegis Sanitizer</title>
+		<script type="importmap" integrity="sha384-bBiwhxhM6vzcvoHlU0g96dptcCuKwTMWE0DXmYWZvMlBP/0xeaYqjyu0r3MBVO2c">
+			{
+				"imports": {
+					"@shgysk8zer0/": "https://unpkg.com/@shgysk8zer0/",
+					"@aegisjsproject/": "https://unpkg.com/@aegisjsproject/",
+					"@kernvalley/": "https://unpkg.com/@kernvalley/",
+					"@aegisjsproject/sanitizer": "../sanitizer.js",
+					"@aegisjsproject/sanitizer/": "../"
+				}
+			}
+		</script>
+		<script type="module" referrerpolicy="no-referrer" src="./index.js" data-aegis-event-on-load="aegis:debug:log" data-aegis-event-once=""></script>
+	</head>
+	<body></body>
+</html>
