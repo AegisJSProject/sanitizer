@@ -83,7 +83,7 @@
     "url": "https://github.com/AegisJSProject/sanitizer/issues"
   },
   "homepage": "https://github.com/AegisJSProject/sanitizer#readme",
-  "dependencies": {
+  "devDependencies": {
     "eslint": "^8.57.0",
     "http-server": "^14.1.1",
     "rollup": "^4.13.0"
