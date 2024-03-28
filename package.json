@@ -1,6 +1,6 @@
 {
   "name": "@aegisjsproject/sanitizer",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A polyfill for the Sanitizer API with various sanitizer configs",
   "keywords": [
     "aegis",
@@ -11,29 +11,33 @@
     "sanitizer-api"
   ],
   "type": "module",
-  "main": "./sanitizer.cjs",
-  "module": "./sanitizer.js",
+  "main": "./sanitizer.js",
+  "module": "./sanitizer.cjs",
   "unpkg": "./polyfill.min.js",
   "exports": {
     ".": {
       "import": "./sanitizer.js",
       "require": "./sanitizer.cjs"
     },
+    "./config/*.js": {
+      "import": "./config/*.js",
+      "require": "./config/*.cjs"
+    },
     "./*.js": {
       "import": "./*.js",
-      "require": "./cjs/*.cjs"
+      "require": "./*.cjs"
     },
     "./*.mjs": {
       "import": "./*.js",
-      "require": "./cjs/*.cjs"
+      "require": "./*.cjs"
     },
     "./*.cjs": {
       "import": "./*.js",
-      "require": "./cjs/*.cjs"
+      "require": "./*.cjs"
     },
     "./*": {
       "import": "./*.js",
-      "require": "./cjs/*.cjs"
+      "require": "./*.cjs"
     }
   },
   "engines": {
@@ -49,13 +53,14 @@
   },
   "scripts": {
     "test": "npm run lint:js && npm run build",
+    "foo": "node ./test.cjs",
     "start": "http-server ${npm_package_config_serve_path} -c-1 --port ${npm_package_config_serve_port} --gzip true --brotli true -a ${npm_package_config_serve_domain} -o /test/",
     "preversion": "npm test",
     "prepare": "npm run build",
     "lint:js": "eslint .",
     "fix:js": "eslint . --fix",
     "build": "npm run build:js",
-    "clean": "rm -f ./cjs/*.cjs",
+    "clean": "rm -f ./*.cjs",
     "build:js": "npm run clean && rollup -c rollup.config.js",
     "create:lock": "npm i --package-lock-only --ignore-scripts --no-audit --no-fund",
     "version:bump": "npm run version:bump:patch",
@@ -84,6 +89,7 @@
   },
   "homepage": "https://github.com/AegisJSProject/sanitizer#readme",
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "eslint": "^8.57.0",
     "http-server": "^14.1.1",

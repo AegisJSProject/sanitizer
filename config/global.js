@@ -1,4 +1,4 @@
-import { normalizeAttr } from '../config-utils.js';
+import { normalizeAttr } from '@aegisjsproject/sanitizer/config-utils.js';
 
 export const attributes = Object.freeze([
 	'accesskey', 'autocapitalize', 'autofocus', 'class', 'contenteditable',

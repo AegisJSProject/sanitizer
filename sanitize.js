@@ -1,10 +1,10 @@
-import { sanitizer as sanitizerConfig } from './config/html.js';
-import { convertConfig, EVENT_ATTRS } from './config-utils.js';
+import { sanitizer as sanitizerConfig } from '@aegisjsproject/sanitizer/config/html.js';
+import { convertConfig, EVENT_ATTRS } from '@aegisjsproject/sanitizer/config-utils.js';
 
 const LINK_ATTRS = new Set(['href', 'src' , 'action']);
 const ILLEGAL_PROTOCOLS = new Set(['javascript:', 'about:', 'data:', 'file:', 'ftp:']);
 
-if (location.protocol === 'https:') {
+if ('location' in globalThis && location.protocol === 'https:') {
 	ILLEGAL_PROTOCOLS.add('http:');
 }
 
@@ -135,3 +135,4 @@ function sanitizeComment(node, config) {
 		node.remove();
 	}
 }
+
