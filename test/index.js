@@ -1,26 +1,26 @@
 import '@aegisjsproject/sanitizer/polyfill.min.js';
 import { sanitizer } from '@aegisjsproject/sanitizer/config/complete.js';
-import { createHTMLParser, css } from '@aegisjsproject/sanitizer/parsers.js';
 
-const html = createHTMLParser(sanitizer);
 const file = new File(['Thanks for downloading my file :)'], 'thanks.txt', { type: 'text/plain' });
 
-document.adoptedStyleSheets [css`
-	:root {
-		font-family: system-ui;
-	}
+Promise.all([
+	new CSSStyleSheet().replace(`
+		:root {
+			font-family: system-ui;
+		}
 
-	#nav {
-		display: flex;
-		gap: 0.8em;
-	}
+		#nav {
+			display: flex;
+			gap: 0.8em;
+		}
 
-	a[href], button {
-		cursor: pointer;
-	}
-`];
+		a[href], button {
+			cursor: pointer;
+		}
+	`),
+]).then(sheets => document.adoptedStyleSheets = sheets);
 
-document.body.append(html`
+document.body.setHTML(`
 	<style>
 		h1::after {
 			display: inline-block;
@@ -82,6 +82,6 @@ document.body.append(html`
 	<template id="tmp">
 		<h1 onclick="alert('Broken Template')">From Template</h1>
 	</template>
-`);
+`, { sanitizer });
 
 document.getElementById('main').append(document.getElementById('tmp').content);

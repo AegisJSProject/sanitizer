@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add `*.cjs` versions of all modules
+
+### Removed
+- Do no generate `*.mjs` scripts
+- Remove parsers (moved to `@aegisjsproject/parsers`)
+
 ### [v0.0.6] - 2024-03-28
 
 ### Fixed
