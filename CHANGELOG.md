@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.0.5] - 2024-03-27
+
+### Added
+- Add `parsers` with tagged template functions for html, css, svg, etc
+- Add generated minified polyfill iife script
+
 ## [v0.0.4] - 2024-03-27
 
 ### Fixed
