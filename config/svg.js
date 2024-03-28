@@ -1,6 +1,6 @@
-import { SVG as SVGNS } from '../namespaces.js';
-import { attributes as globalAttrs } from './global.js';
-import { normalizeAttr, normalizeElement } from '../config-utils.js';
+import { SVG as SVGNS } from '@aegisjsproject/sanitizer/namespaces.js';
+import { attributes as globalAttrs } from '@aegisjsproject/sanitizer/config/global.js';
+import { normalizeAttr, normalizeElement } from '@aegisjsproject/sanitizer/config-utils.js';
 
 /**
  * @see https://developer.mozilla.org/en-US/docs/Web/SVG/Element

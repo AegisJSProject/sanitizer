@@ -1,4 +1,4 @@
-import { HTML as HTMLNS } from './namespaces.js';
+import { HTML as HTMLNS } from '@aegisjsproject/sanitizer/namespaces.js';
 
 export const EVENT_ATTRS = new Set(('HTMLElement' in globalThis
 	? Object.keys(HTMLElement.prototype) : [])

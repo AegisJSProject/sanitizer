@@ -2,11 +2,9 @@
  * @copyright 2023-2024 Chris Zuber <admin@kernvalley.us>
  * @see https://wicg.github.io/sanitizer-api/#default-configuration-dictionary
  */
-import { HTML as namespace } from '../namespaces.js';
-import { normalizeAttr, normalizeElement } from '../config-utils.js';
-import { attributes as globalAttrs } from './global.js';
-export const allowCustomElements = true;
-export const allowUnknownMarkup = false;
+import { HTML as namespace } from '@aegisjsproject/sanitizer/namespaces.js';
+import { normalizeAttr, normalizeElement } from '@aegisjsproject/sanitizer/config-utils.js';
+import { attributes as globalAttrs } from '@aegisjsproject/sanitizer/config/global.js';
 export const comments = false;
 
 
@@ -248,7 +246,4 @@ export const attributes = Object.freeze([
 	'wrap',
 ].map(attr => normalizeAttr(attr)).concat(globalAttrs));
 
-export const sanitizer = Object.freeze({
-	allowCustomElements, allowUnknownMarkup, comments, elements,
-	attributes,
-});
+export const sanitizer = Object.freeze({ comments, elements, attributes });

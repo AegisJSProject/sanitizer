@@ -1,6 +1,6 @@
-import { MATHML as MATHNS } from '../namespaces.js';
-import { attributes as globalAttrs } from './global.js';
-import { normalizeAttr, normalizeElement } from '../config-utils.js';
+import { MATHML as MATHNS } from '@aegisjsproject/sanitizer/namespaces.js';
+import { attributes as globalAttrs } from '@aegisjsproject/sanitizer/config/global.js';
+import { normalizeAttr, normalizeElement } from '@aegisjsproject/sanitizer/config-utils.js';
 
 export const comments = false;
 

@@ -6,8 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.0.7] - 2024-03-28
+
 ### Added
 - Add `*.cjs` versions of all modules
+- Add `*.min.js` versions of config files
 
 ### Removed
 - Do no generate `*.mjs` scripts

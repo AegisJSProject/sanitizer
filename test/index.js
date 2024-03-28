@@ -1,5 +1,5 @@
 import '@aegisjsproject/sanitizer/polyfill.min.js';
-import { sanitizer } from '@aegisjsproject/sanitizer/config/complete.js';
+import { sanitizer } from '@aegisjsproject/sanitizer/config/complete.min.js';
 
 const file = new File(['Thanks for downloading my file :)'], 'thanks.txt', { type: 'text/plain' });
 
@@ -35,6 +35,7 @@ document.body.setHTML(`
 		<button type="button" popovertarget="math" popovertargetaction="show" accesskey="p">Pythagorean theorem</button>
 		<a href="#foo">Normal Link</a>
 		<a href="javascript:alert('javascript:')"><code>javascript:</code> Link</a>
+		<a href="file:${import.meta.url}"><code>file:</code> Link</a>
 		<a href="data:text/plain,Not%20Allowed" target="_blank"><code>data:</code> Link</a>
 		<a href="${URL.createObjectURL(file)}" download="${file.name}" target="_blank"><code>blob:</code> Download Link</a>
 	</nav>
