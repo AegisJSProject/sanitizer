@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### [v0.0.6] - 2024-03-28
+
+### Fixed
+- Do not ignore `*.min.*` & `*.map` when publishing
+
 ## [v0.0.5] - 2024-03-27
 
 ### Added
