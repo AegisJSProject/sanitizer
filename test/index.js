@@ -1,26 +1,26 @@
-import '@aegisjsproject/sanitizer/polyfill.js';
+import '@aegisjsproject/sanitizer/polyfill.min.js';
 import { sanitizer } from '@aegisjsproject/sanitizer/config/complete.js';
+import { createHTMLParser, css } from '@aegisjsproject/sanitizer/parsers.js';
 
-const file = new File(['This should be allowed'], 'allowed.txt', { type: 'text/plain' });
+const html = createHTMLParser(sanitizer);
+const file = new File(['Thanks for downloading my file :)'], 'thanks.txt', { type: 'text/plain' });
 
-Promise.all([
-	new CSSStyleSheet().replace(`
-		:root {
-			font-family: system-ui;
-		}
+document.adoptedStyleSheets [css`
+	:root {
+		font-family: system-ui;
+	}
 
-		#nav {
-			display: flex;
-			gap: 0.8em;
-		}
+	#nav {
+		display: flex;
+		gap: 0.8em;
+	}
 
-		a[href], button {
-			cursor: pointer;
-		}
-	`),
-]).then(sheets => document.adoptedStyleSheets = sheets);
+	a[href], button {
+		cursor: pointer;
+	}
+`];
 
-document.body.setHTML(`
+document.body.append(html`
 	<style>
 		h1::after {
 			display: inline-block;
@@ -36,7 +36,7 @@ document.body.setHTML(`
 		<a href="#foo">Normal Link</a>
 		<a href="javascript:alert('javascript:')"><code>javascript:</code> Link</a>
 		<a href="data:text/plain,Not%20Allowed" target="_blank"><code>data:</code> Link</a>
-		<a href="${URL.createObjectURL(file)}" target="_blank"><code>blob:</code> Link</a>
+		<a href="${URL.createObjectURL(file)}" download="${file.name}" target="_blank"><code>blob:</code> Download Link</a>
 	</nav>
 	<main id="main"></main>
 	<div popover="auto" id="bacon">
@@ -82,6 +82,6 @@ document.body.setHTML(`
 	<template id="tmp">
 		<h1 onclick="alert('Broken Template')">From Template</h1>
 	</template>
-`, { sanitizer });
+`);
 
 document.getElementById('main').append(document.getElementById('tmp').content);
