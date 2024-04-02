@@ -1,5 +1,14 @@
-import '@aegisjsproject/sanitizer/polyfill.min.js';
+import '@aegisjsproject/trusted-types';
+import '@aegisjsproject/sanitizer';
 import { sanitizer } from '@aegisjsproject/sanitizer/config/complete.min.js';
+
+trustedTypes.createPolicy('default', {
+	createHTML(input, { elements, attributes, comments } = {}) {
+		const el = document.createElement('div');
+		el.setHTML(input, { sanitizer: { elements, attributes, comments }});
+		return el.innerHTML;
+	}
+});
 
 const file = new File(['Thanks for downloading my file :)'], 'thanks.txt', { type: 'text/plain' });
 

@@ -6,19 +6,20 @@
 		<meta name="color-scheme" content="light dark" />
 		<meta http-equiv="Content-Security-Policy"
 			content="default-src 'none';
-			script-src 'self' https://unpkg.com/@shgysk8zer0/ https://unpkg.com/@aegisjsproject/ 'sha384-bBiwhxhM6vzcvoHlU0g96dptcCuKwTMWE0DXmYWZvMlBP/0xeaYqjyu0r3MBVO2c';
+			script-src 'self' https://unpkg.com/@shgysk8zer0/ https://unpkg.com/@aegisjsproject/ 'sha384-/STe05mzj/JRciXcbBhaSAx/2kUz0aexe5u52FQXAhXwjHAlPgTKSwGIt6XbPSEA';
 			style-src 'self' blob: data:;
 			connect-src 'none';
-			trusted-types empty#html empty#script aegis-sanitizer#html default;
+			trusted-types default aegis-sanitizer#html;
 			require-trusted-types-for 'script';" />
 		<title>Aegis Sanitizer</title>
-		<script type="importmap" integrity="sha384-bBiwhxhM6vzcvoHlU0g96dptcCuKwTMWE0DXmYWZvMlBP/0xeaYqjyu0r3MBVO2c">
+		<script type="importmap" integrity="sha384-/STe05mzj/JRciXcbBhaSAx/2kUz0aexe5u52FQXAhXwjHAlPgTKSwGIt6XbPSEA">
 			{
 				"imports": {
 					"@shgysk8zer0/": "https://unpkg.com/@shgysk8zer0/",
 					"@aegisjsproject/": "https://unpkg.com/@aegisjsproject/",
+					"@aegisjsproject/trusted-types": "../node_modules/@aegisjsproject/trusted-types/bundle.js",
 					"@kernvalley/": "https://unpkg.com/@kernvalley/",
-					"@aegisjsproject/sanitizer": "../sanitizer.js",
+					"@aegisjsproject/sanitizer": "../polyfill.js",
 					"@aegisjsproject/sanitizer/": "../"
 				}
 			}

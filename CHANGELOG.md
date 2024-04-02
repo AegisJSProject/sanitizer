@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add `@aegisjsproject/trusted-types` as dev dependency
+
 ## [v0.0.7] - 2024-03-28
 
 ### Added
