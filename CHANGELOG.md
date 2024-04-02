@@ -6,8 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.0.8] - 2024-04-01
+
 ### Added
 - Add `@aegisjsproject/trusted-types` as dev dependency
+
+### Fixed
+- Fix indexing issue iterating over child nodes and attributes
 
 ## [v0.0.7] - 2024-03-28
 

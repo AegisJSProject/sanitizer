@@ -3,7 +3,11 @@ import '@aegisjsproject/sanitizer';
 import { sanitizer } from '@aegisjsproject/sanitizer/config/complete.min.js';
 
 trustedTypes.createPolicy('default', {
-	createHTML(input, { elements, attributes, comments } = {}) {
+	createHTML(input, {
+		elements = sanitizer.elements,
+		attributes = sanitizer.attributes,
+		comments = sanitizer.comments,
+	} = sanitizer) {
 		const el = document.createElement('div');
 		el.setHTML(input, { sanitizer: { elements, attributes, comments }});
 		return el.innerHTML;
@@ -29,7 +33,7 @@ Promise.all([
 	`),
 ]).then(sheets => document.adoptedStyleSheets = sheets);
 
-document.body.setHTML(`
+document.body.innerHTML = `
 	<style>
 		h1::after {
 			display: inline-block;
@@ -92,6 +96,6 @@ document.body.setHTML(`
 	<template id="tmp">
 		<h1 onclick="alert('Broken Template')">From Template</h1>
 	</template>
-`, { sanitizer });
+`;
 
 document.getElementById('main').append(document.getElementById('tmp').content);

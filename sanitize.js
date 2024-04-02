@@ -2,11 +2,7 @@ import { sanitizer as sanitizerConfig } from '@aegisjsproject/sanitizer/config/h
 import { convertConfig, EVENT_ATTRS } from '@aegisjsproject/sanitizer/config-utils.js';
 
 const LINK_ATTRS = new Set(['href', 'src' , 'action']);
-const ILLEGAL_PROTOCOLS = new Set(['javascript:', 'about:', 'data:', 'file:', 'ftp:']);
-
-if ('location' in globalThis && location.protocol === 'https:') {
-	ILLEGAL_PROTOCOLS.add('http:');
-}
+const ILLEGAL_PROTOCOLS = new Set(['javascript:', 'data:', 'file:', 'ftp:']);
 
 function createPolicy(name, { createHTML, createScript, createScriptURL }) {
 	if ('trustedTypes' in globalThis) {
@@ -68,9 +64,11 @@ function isIllegalURLAttr(attr) {
 }
 
 function isAllowedAttr(attr, config) {
+	const ns = attr.namespaceURI || '';
+
 	return attr.name.startsWith('data-') || (
-		(attr.namespaceURI ?? '') in config.attributes
-		&& config.attributes[attr.namespaceURI ?? ''].some(opt => opt.name === attr.localName)
+		ns in config.attributes
+		&& config.attributes[ns].some(opt => opt.name === attr.localName)
 		&& ! EVENT_ATTRS.has(attr.localName)
 		&& ! isIllegalURLAttr(attr)
 	);
@@ -110,12 +108,22 @@ function sanitizeElement(el, config) {
 	if (! isAllowedElement(el, config)) {
 		el.remove();
 	} else {
-		[...el.attributes].forEach(attr => sanitizeAttr(attr, config));
+		if (el.hasAttributes()) {
+			const attrs = el.attributes;
+
+			for (let i = attrs.length - 1; i !== -1; i--) {
+				sanitizeAttr(attrs[i], config);
+			}
+		}
 
 		if (el.tagName === 'TEMPLATE') {
 			sanitizeFragOrDoc(el.content, config);
 		} else if (el.hasChildNodes()) {
-			el.childNodes.forEach(node => sanitizeNode(node, config));
+			const childNodes = el.childNodes;
+
+			for (let i = childNodes.length - 1; i !== -1; i--) {
+				sanitizeNode(childNodes[i], config);
+			}
 		}
 	}
 }
@@ -127,7 +135,13 @@ function sanitizeAttr(attr, config) {
 }
 
 function sanitizeFragOrDoc(node, config) {
-	node.childNodes.forEach(child => sanitizeNode(child, config));
+	if (node.hasChildNodes()) {
+		const childNodes = node.childNodes;
+
+		for (let i = childNodes.length - 1; i !== -1; i--) {
+			sanitizeNode(childNodes[i], config);
+		}
+	}
 }
 
 function sanitizeComment(node, config) {
@@ -135,4 +149,3 @@ function sanitizeComment(node, config) {
 		node.remove();
 	}
 }
-
