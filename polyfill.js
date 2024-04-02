@@ -6,8 +6,19 @@ import {
 	comments as cmnts
 } from '@aegisjsproject/sanitizer/config/html.js';
 
+if (! (Promise.withResolvers instanceof Function)) {
+	Promise.withResolvers = function withResolvers() {
+		const def = {};
+		def.promise = new Promise((resolve, reject) => {
+			def.resolve = resolve;
+			def.reject = reject;
+		});
+		return def;
+	};
+}
+
 /**
- * This is needed for working with sanitizer configs & arrts
+ * This is needed for working with sanitizer configs & attrs
  */
 
 if (! (URL.canParse instanceof Function)) {
@@ -21,9 +32,26 @@ if (! (URL.canParse instanceof Function)) {
 	};
 }
 
+if (! (URL.parse instanceof Function)) {
+	URL.parse = function parse(url, base) {
+		return URL.canParse(url, base) ? new URL(url, base) : null;
+	};
+}
+
 if (! (Object.groupBy instanceof Function)) {
 	Object.groupBy = function groupBy(arr, callback) {
-		return Object.fromEntries(arr.map(item => [callback(item), item]));
+		const obj = {};
+		for (const item of arr) {
+			const key = callback(item);
+
+			if (! (key in obj)) {
+				obj[key] = [item];
+			} else {
+				obj[key].push(item);
+			}
+		}
+
+		return obj;
 	};
 }
 

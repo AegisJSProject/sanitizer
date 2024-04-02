@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.0.9] - 2024-04-02
+
+### Added
+- Add polyfills for `URL.parse` & `Promise.withResolvers`
+
+### Fixed
+- Fix polyfill for `Object.groupBy`
+
 ## [v0.0.8] - 2024-04-01
 
 ### Added
