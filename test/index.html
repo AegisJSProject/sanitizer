@@ -5,11 +5,11 @@
 		<meta name="viewport" content="width=device-width" />
 		<meta name="color-scheme" content="light dark" />
 		<meta http-equiv="Content-Security-Policy"
-			content="default-src 'none';
-			script-src 'self' https://unpkg.com/@shgysk8zer0/ https://unpkg.com/@aegisjsproject/ 'sha384-/STe05mzj/JRciXcbBhaSAx/2kUz0aexe5u52FQXAhXwjHAlPgTKSwGIt6XbPSEA';
+			content="default-src 'self';
+			script-src 'self' https://unpkg.com/@shgysk8zer0/ https://unpkg.com/@aegisjsproject/ 'sha384-/STe05mzj/JRciXcbBhaSAx/2kUz0aexe5u52FQXAhXwjHAlPgTKSwGIt6XbPSEA' 'unsafe-inline' 'unsafe-eval';
 			style-src 'self' blob: data:;
 			connect-src 'none';
-			trusted-types default aegis-sanitizer#html;
+			trusted-types default aegis-sanitizer#html aegis#html;
 			require-trusted-types-for 'script';" />
 		<title>Aegis Sanitizer</title>
 		<script type="importmap" integrity="sha384-/STe05mzj/JRciXcbBhaSAx/2kUz0aexe5u52FQXAhXwjHAlPgTKSwGIt6XbPSEA">
@@ -26,5 +26,7 @@
 		</script>
 		<script type="module" referrerpolicy="no-referrer" src="./index.js"></script>
 	</head>
-	<body></body>
+	<body>
+		<div id="container"></div>
+	</body>
 </html>

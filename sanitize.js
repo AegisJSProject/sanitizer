@@ -1,49 +1,31 @@
 import { sanitizer as sanitizerConfig } from '@aegisjsproject/sanitizer/config/html.js';
 import { convertConfig, EVENT_ATTRS } from '@aegisjsproject/sanitizer/config-utils.js';
+import { createPolicy } from '@aegisjsproject/sanitizer/trust.js';
 
-const LINK_ATTRS = new Set(['href', 'src' , 'action']);
+const LINK_ATTRS = new Set(['href', 'src' , 'action', 'xlink:href']);
 const ILLEGAL_PROTOCOLS = new Set(['javascript:', 'data:', 'file:', 'ftp:']);
-
-function createPolicy(name, { createHTML, createScript, createScriptURL }) {
-	if ('trustedTypes' in globalThis) {
-		return globalThis.trustedTypes.createPolicy(name, { createHTML, createScript, createScriptURL });
-	} else {
-		return Object.freeze({
-			[Symbol.for('policy-name')]: name,
-			createHTML: createHTML instanceof Function
-				? (input, ...args) => createHTML(input.toString(), ...args).toString()
-				: null,
-			createScript: createScript instanceof Function
-				? (input, ...args) => createScript(input.toString(), ...args).toString()
-				: null,
-			createScriptURL: createScriptURL instanceof Function
-				? (input, ...args) => createScriptURL(input.toString(), ...args).toString()
-				: null,
-		});
-	}
-}
 
 const policy = createPolicy('aegis-sanitizer#html', { createHTML: input => input });
 
-export function setHTML(el, content, { sanitizer = sanitizerConfig } = {}) {
+export function setHTML(el, content, { sanitizer = sanitizerConfig, allowInsecure = false } = {}) {
 	const tmp = document.createElement('template');
 	tmp.innerHTML = policy.createHTML(content);
-	sanitize(tmp.content, sanitizer);
+	sanitize(tmp.content, sanitizer, allowInsecure);
 	el.replaceChildren(tmp.content);
 }
 
-export function parseHTML(content, { sanitizer = sanitizerConfig } = {}) {
+export function parseHTML(content, { sanitizer = sanitizerConfig, allowInsecure = false } = {}) {
 	const doc = new DOMParser().parseFromString(policy.createHTML(content), 'text/html');
-	sanitize(doc, sanitizer);
+	sanitize(doc, sanitizer, allowInsecure);
 	return doc;
 }
 
-export function sanitize(node, config = sanitizerConfig) {
+export function sanitize(node, config = sanitizerConfig, allowInsecure = false) {
 	if (! (node instanceof Node)) {
 		throw new TypeError('Not a node.');
 	} else {
 		const converted = convertConfig(config);
-		return sanitizeNode(node, converted);
+		return sanitizeNode(node, converted, allowInsecure);
 	}
 }
 
@@ -53,7 +35,7 @@ function isAllowedElement(el, config) {
 }
 
 function isIllegalURLAttr(attr) {
-	if (! LINK_ATTRS.has(attr.localName)) {
+	if (! LINK_ATTRS.has(attr.name)) {
 		return false;
 	} else if (! URL.canParse(attr.value)) {
 		return false;
@@ -63,34 +45,44 @@ function isIllegalURLAttr(attr) {
 	}
 }
 
-function isAllowedAttr(attr, config) {
+const isScriptAttr = 'trustedTypes' in globalThis
+	? attr => trustedTypes.getAttributeType(
+		attr.ownerElement.tagName, attr.localName,
+		attr.ownerElement.namespaceURI, attr.namespaceURI,
+	) !== null
+	: attr => EVENT_ATTRS.has(attr.localName);
+
+function isAllowedAttr(attr, config, allowInsecure = false) {
 	const ns = attr.namespaceURI || '';
 
-	return attr.name.startsWith('data-') || (
+	return (
+		(! ('dataAttributes' in config) || config.dataAttributes)
+		&& attr.name.startsWith('data-')
+	) || (
 		ns in config.attributes
 		&& config.attributes[ns].some(opt => opt.name === attr.localName)
-		&& ! EVENT_ATTRS.has(attr.localName)
-		&& ! isIllegalURLAttr(attr)
+		&& ! (allowInsecure || isScriptAttr(attr))
+		&& ! (allowInsecure || isIllegalURLAttr(attr))
 	);
 }
 
-function sanitizeNode(node, config) {
+function sanitizeNode(node, config, allowInsecure = false) {
 	switch(node.nodeType) {
 		case Node.ELEMENT_NODE:
-			sanitizeElement(node, config);
+			sanitizeElement(node, config,  allowInsecure);
 			break;
 
 		case Node.DOCUMENT_NODE:
 		case Node.DOCUMENT_FRAGMENT_NODE:
-			sanitizeFragOrDoc(node, config);
+			sanitizeFragOrDoc(node, config, allowInsecure);
 			break;
 
 		case Node.COMMENT_NODE:
-			sanitizeComment(node, config);
+			sanitizeComment(node, config, allowInsecure);
 			break;
 
 		case Node.ATTRIBUTE_NODE:
-			sanitizeAttr(node, config);
+			sanitizeAttr(node, config, allowInsecure);
 			break;
 
 		case Node.TEXT_NODE:
@@ -104,7 +96,7 @@ function sanitizeNode(node, config) {
 	}
 }
 
-function sanitizeElement(el, config) {
+function sanitizeElement(el, config, allowInsecure) {
 	if (! isAllowedElement(el, config)) {
 		el.remove();
 	} else {
@@ -112,34 +104,34 @@ function sanitizeElement(el, config) {
 			const attrs = el.attributes;
 
 			for (let i = attrs.length - 1; i !== -1; i--) {
-				sanitizeAttr(attrs[i], config);
+				sanitizeAttr(attrs[i], config, allowInsecure);
 			}
 		}
 
 		if (el.tagName === 'TEMPLATE') {
-			sanitizeFragOrDoc(el.content, config);
+			sanitizeFragOrDoc(el.content, config, allowInsecure);
 		} else if (el.hasChildNodes()) {
 			const childNodes = el.childNodes;
 
 			for (let i = childNodes.length - 1; i !== -1; i--) {
-				sanitizeNode(childNodes[i], config);
+				sanitizeNode(childNodes[i], config, allowInsecure);
 			}
 		}
 	}
 }
 
-function sanitizeAttr(attr, config) {
-	if (! isAllowedAttr(attr, config) && attr.ownerElement instanceof Element) {
+function sanitizeAttr(attr, config, allowInsecure = false) {
+	if (! isAllowedAttr(attr, config,  allowInsecure) && attr.ownerElement instanceof Element) {
 		attr.ownerElement.removeAttributeNode(attr);
 	}
 }
 
-function sanitizeFragOrDoc(node, config) {
+function sanitizeFragOrDoc(node, config,  allowInsecure = false) {
 	if (node.hasChildNodes()) {
 		const childNodes = node.childNodes;
 
 		for (let i = childNodes.length - 1; i !== -1; i--) {
-			sanitizeNode(childNodes[i], config);
+			sanitizeNode(childNodes[i], config, allowInsecure);
 		}
 	}
 }

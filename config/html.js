@@ -7,6 +7,7 @@ import { normalizeAttr, normalizeElement } from '@aegisjsproject/sanitizer/confi
 import { attributes as globalAttrs } from '@aegisjsproject/sanitizer/config/global.js';
 export const comments = false;
 
+export const dataAttributes = true;
 
 /**
  * Tags listed on MDN, + a few deprecated / experimental ones
@@ -246,4 +247,4 @@ export const attributes = Object.freeze([
 	'wrap',
 ].map(attr => normalizeAttr(attr)).concat(globalAttrs));
 
-export const sanitizer = Object.freeze({ comments, elements, attributes });
+export const sanitizer = Object.freeze({ comments, elements, attributes, dataAttributes });

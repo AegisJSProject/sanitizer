@@ -1,4 +1,4 @@
-import { SVG as SVGNS } from '@aegisjsproject/sanitizer/namespaces.js';
+import { SVG as SVGNS, XLINK, XML as XMLNS } from '@aegisjsproject/sanitizer/namespaces.js';
 import { attributes as globalAttrs } from '@aegisjsproject/sanitizer/config/global.js';
 import { normalizeAttr, normalizeElement } from '@aegisjsproject/sanitizer/config-utils.js';
 
@@ -8,6 +8,8 @@ import { normalizeAttr, normalizeElement } from '@aegisjsproject/sanitizer/confi
 
 export const comments = false;
 
+export const dataAttributes = true;
+
 export const elements = Object.freeze([
 	'a', 'animate', 'animateMotion', 'animateTransform', 'circle', 'clipPath',
 	'defs', 'desc', 'ellipse', 'feBlend', 'feColorMatrix', 'feComponentTransfer',
@@ -15,12 +17,12 @@ export const elements = Object.freeze([
 	'feDistantLight', 'feDropShadow', 'feFlood', 'feFuncA', 'feFuncB', 'feFuncG',
 	'feFuncR', 'feGaussianBlur', 'feImage', 'feMerge', 'feMergeNode', 'feMorphology',
 	'feOffset', 'fePointLight', 'feSpecularLighting', 'feSpotLight', 'feTile',
-	'feTurbulence', 'filter', 'foreignObject', 'g', 'image', 'line', 'linearGradient',
+	'feTurbulence', 'filter', 'foreignObject', 'g', 'line', 'linearGradient',
 	'marker', 'mask', 'metadata', 'mpath', 'path', 'pattern', 'polygon', 'polyline',
 	'radialGradient', 'rect', 'script', 'set', 'stop', 'style', 'svg', 'switch',
 	'symbol', 'text', 'textPath', 'title', 'tspan', 'view', 'missing-glyph', 'font',
 	'font-face', 'font-face-format', 'font-face-name', 'font-face-src',
-	'font-face-uri', 'hkern', 'vkern', 'glyph', 'glyphRef', 'tref', 'cursor',
+	'font-face-uri', 'hkern', 'vkern', 'glyph', 'glyphRef', 'tref', 'cursor', 'use',
 ].map(el => normalizeElement(el, SVGNS)));
 
 export const attributes = Object.freeze([
@@ -65,10 +67,17 @@ export const attributes = Object.freeze([
 	'v-hanging', 'v-ideographic', 'v-mathematical', 'values', 'vector-effect',
 	'version', 'vert-adv-y', 'vert-origin-x', 'vert-origin-y', 'viewBox',
 	'visibility', 'width', 'widths', 'word-spacing', 'writing-mode', 'x', 'x-height',
-	'x1', 'x2', 'xChannelSelector', 'xlink:actuate', 'xlink:arcrole', 'xlink:href',
-	'xlink:role', 'xlink:show', 'xlink:title', 'xlink:type', 'xml:base', 'xml:lang',
-	'xml:space', 'y', 'y1', 'y2', 'yChannelSelector', 'z', 'zoomAndPan',
-	'autoReverse', 'accelerate',
-].map(attr => normalizeAttr(attr,'')).concat(globalAttrs));
+	'x1', 'x2', 'xChannelSelector', 'y', 'y1', 'y2', 'yChannelSelector', 'z',
+	'zoomAndPan', 'autoReverse', 'accelerate', 'xmlns',
+	{ name: 'actuate', namespace: XLINK },
+	{ name: 'arcrole', namespaec: XLINK },
+	{ name: 'href', namespace: XLINK },
+	{ name: 'role', namespace: XLINK },
+	{ name: 'show', namespace: XLINK },
+	{ name: 'title', namespace: XLINK },
+	{ name: 'type', namespace: XLINK },
+	{ name: 'space', namespace: XMLNS },
+].map(attr => normalizeAttr(attr)).concat(globalAttrs));
 
-export const sanitizer = Object.freeze({ elements, attributes, comments });
+export const sanitizer = Object.freeze({ elements, attributes, comments, dataAttributes });
+

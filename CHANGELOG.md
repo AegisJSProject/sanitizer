@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.0.10] - 2024-04-03
+
+### Added
+- Add `dataAttributes` to control allowing of `data-*` attributes
+- Add module for Sanitizer + TrustedTypes policy
+
+### Changed
+- Update SVG config to allow `<use>` & `xlink:href`, etc
+- Use `trustedTypes.getAttributeType()` if available when sanitizing attributes
+
 ## [v0.0.9] - 2024-04-02
 
 ### Added
