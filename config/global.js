@@ -24,4 +24,4 @@ export const attributes = Object.freeze([
 	'aria-rowcount', 'aria-rowindex', 'aria-rowindextext', 'aria-rowspan',
 	'aria-selected', 'aria-setsize', 'aria-sort', 'aria-valuemax', 'aria-valuemin',
 	'aria-valuenow', 'aria-valuetext',
-].map(attr => normalizeAttr(attr, '' )));
+].map(attr => normalizeAttr(attr)));

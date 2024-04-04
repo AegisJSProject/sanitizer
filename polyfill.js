@@ -3,7 +3,8 @@ import {
 	sanitizer as sanitizerConfig,
 	elements as els,
 	attributes as attrs,
-	comments as cmnts
+	comments as cmnts,
+	dataAttributes as dataAttrs,
 } from '@aegisjsproject/sanitizer/config/html.js';
 
 if (! (Promise.withResolvers instanceof Function)) {
@@ -61,9 +62,11 @@ if (! (Element.prototype.setHTML instanceof Function)) {
 			elements = els,
 			attributes = attrs,
 			comments = cmnts,
+			dataAttributes = dataAttrs,
+			...rest
 		} = sanitizerConfig,
 	} = {}) {
-		html(this, content, { sanitizer: { elements, attributes, comments }});
+		html(this, content, { sanitizer: { elements, attributes, comments, dataAttributes, ...rest }});
 	};
 }
 
@@ -73,8 +76,10 @@ if (! (Document.parseHTML instanceof Function)) {
 			elements = els,
 			attributes = attrs,
 			comments = cmnts,
+			dataAttributes = dataAttrs,
+			...rest
 		} = sanitizerConfig,
 	} = {}) {
-		return parse(content, { sanitizer: { elements, attributes, comments }});
+		return parse(content, { sanitizer: { elements, attributes, comments, dataAttributes, ...rest }});
 	};
 }

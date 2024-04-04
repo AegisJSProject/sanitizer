@@ -30,22 +30,23 @@ function normalizeElementsConfig({ elements, allowElements }, defaultNS = HTMLNS
 	}
 }
 
-export function normalizeAttr(opt, defaultNS ='') {
+export function normalizeAttr(opt, defaultNS) {
 	if (typeof opt === 'string') {
 		return Object.freeze({ name: opt, namespace: defaultNS });
 	} else if (typeof opt === 'object' && typeof opt.name === 'string') {
-		const { name, namespace = defaultNS, elements } = opt;
+		const { name, namespace = defaultNS, elements, ...rest } = opt;
 		return Object.freeze({
 			name,
 			namespace: typeof namespace === 'string' ? namespace : defaultNS,
 			elements,
+			...rest
 		});
 	} else {
 		throw new TypeError('Invalid entry in `attributes` config.');
 	}
 }
 
-function normalizeAttrsConfig({ attributes, allowAttributes }, defaultNS = '') {
+function normalizeAttrsConfig({ attributes, allowAttributes }, defaultNS) {
 	if (typeof allowAttributes !== 'undefined') {
 		console.warn('Use of `allowAttributes` is deprecated. Please use `attributes` instead.');
 		return normalizeAttrsConfig({ attributes: allowAttributes }, defaultNS);
@@ -74,12 +75,23 @@ function normalizeCommentsConfig({ comments, allowComments }) {
 
 export function normalizeConfig(config, {
 	elementNS = HTMLNS,
-	attributeNS = '',
+	attributeNS,
 } = {}) {
+	const {
+		elements,
+		attributes,
+		allowElements,
+		allowAttributes,
+		comments = false,
+		dataAttributes = true,
+		...rest
+	} = config;
 	return {
-		elements: normalizeElementsConfig(config, elementNS),
-		attributes: normalizeAttrsConfig(config, attributeNS),
-		comments: normalizeCommentsConfig(config),
+		elements: normalizeElementsConfig({ elements, allowElements }, elementNS),
+		attributes: normalizeAttrsConfig({ attributes, allowAttributes }, attributeNS),
+		comments,
+		dataAttributes,
+		...rest,
 	};
 }
 
@@ -87,7 +99,7 @@ function convertAttrConfig({ attributes, allowAttributes }, defaultNS) {
 	return Object.freeze(
 		Object.groupBy(
 			normalizeAttrsConfig({ attributes, allowAttributes }, defaultNS),
-			({ namespace }) => namespace
+			({ namespace }) => namespace ?? ''
 		)
 	);
 }
@@ -103,7 +115,7 @@ function convertElementConfig({ elements, allowElements }, defaultNS = HTMLNS) {
 
 export function convertConfig(config, {
 	elementNS = HTMLNS,
-	attributeNS = '',
+	attributeNS,
 } = {}) {
 	if (typeof config !== 'object' || config === null) {
 		throw new TypeError('Sanitizer config must be an object.');
@@ -114,18 +126,21 @@ export function convertConfig(config, {
 			allowElements: elements,
 			allowAttributes: attributes,
 			allowComments: comments,
+			...rest
 		} = config.getConfiguration();
 
 		return Object.freeze({
 			elements: convertElementConfig({ elements }, elementNS),
 			attributes: convertAttrConfig({ attributes }, attributeNS),
 			comments,
+			...rest
 		});
 	} else {
 		return Object.freeze({
 			elements: convertElementConfig(config, elementNS),
 			attributes: convertAttrConfig(config, attributeNS),
 			comments: normalizeCommentsConfig(config),
+			dataAttributes: typeof config.dataAttributes === 'undefined' ? true : config.dataAttributes,
 		});
 	}
 }

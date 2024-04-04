@@ -7,4 +7,6 @@ export const attributes = Object.freeze(Array.from(new Set([...HTMLAttributes, .
 
 export const comments = false;
 
-export const sanitizer = Object.freeze({ elements, attributes, comments });
+export const dataAttributes = true;
+
+export const sanitizer = Object.freeze({ elements, attributes, comments, dataAttributes });

@@ -4,6 +4,8 @@ import { normalizeAttr, normalizeElement } from '@aegisjsproject/sanitizer/confi
 
 export const comments = false;
 
+export const dataAttributes = true;
+
 /**
  *@see https://developer.mozilla.org/en-US/docs/Web/MathML/Element
  */
@@ -29,6 +31,6 @@ export const attributes = Object.freeze([
 	'rspace', 'rquote', 'scriptlevel', 'scriptminsize', 'scriptsizemultiplier',
 	'selection', 'separator', 'separators', 'stretchy', 'subscriptshift', 'superscriptshift',
 	'symmetric', 'voffset', 'width', 'xmlns',
-].map(attr => normalizeAttr(attr, '')).concat(globalAttrs));
+].map(attr => normalizeAttr(attr)).concat(globalAttrs));
 
-export const sanitizer = Object.freeze({ elements, attributes, comments });
+export const sanitizer = Object.freeze({ elements, attributes, comments, dataAttributes });
