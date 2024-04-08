@@ -54,7 +54,7 @@ export function createSanitizerPolicy(name = 'aegis#html', { defaultConfig = {} 
 			...rest
 		}  = defaultConfig) {
 			const el = document.createElement('div');
-			el.setHTML(input, { sanitizer: { elements, attributes, comments, dataAttributes, ...rest }});
+			el.setHTML(input, { elements, attributes, comments, dataAttributes, ...rest });
 			return el.innerHTML;
 		}
 	});

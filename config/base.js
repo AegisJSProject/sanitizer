@@ -1,5 +1,5 @@
 import { elements as HTMLElements, attributes as HTMLAttributes } from '@aegisjsproject/sanitizer/config/html.js';
-import { elements as SVGElements,attributes as SVGAttributes } from '@aegisjsproject/sanitizer/config/svg.js';
+import { elements as SVGElements, attributes as SVGAttributes } from '@aegisjsproject/sanitizer/config/svg.js';
 
 export const elements = Object.freeze([...HTMLElements, ...SVGElements]);
 

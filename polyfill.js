@@ -1,11 +1,4 @@
 import { setHTML as html, parseHTML as parse } from '@aegisjsproject/sanitizer/sanitize.js';
-import {
-	sanitizer as sanitizerConfig,
-	elements as els,
-	attributes as attrs,
-	comments as cmnts,
-	dataAttributes as dataAttrs,
-} from '@aegisjsproject/sanitizer/config/html.js';
 
 if (! (Promise.withResolvers instanceof Function)) {
 	Promise.withResolvers = function withResolvers() {
@@ -58,28 +51,43 @@ if (! (Object.groupBy instanceof Function)) {
 
 if (! (Element.prototype.setHTML instanceof Function)) {
 	Element.prototype.setHTML = function setHTML(content, {
-		sanitizer: {
-			elements = els,
-			attributes = attrs,
-			comments = cmnts,
-			dataAttributes = dataAttrs,
-			...rest
-		} = sanitizerConfig,
+		elements,
+		attributes,
+		comments,
+		dataAttributes,
+		sanitizer,
+		...rest
 	} = {}) {
-		html(this, content, { sanitizer: { elements, attributes, comments, dataAttributes, ...rest }});
+		if (typeof sanitizer === 'object' && sanitizer !== null) {
+			console.warn('Use of `sanitizer` in config is deprecated. Please set config directly.');
+			html(this, content, sanitizer);
+		} else {
+			html(this, content, { elements, attributes, comments, dataAttributes, ...rest });
+		}
+	};
+
+	DocumentFragment.prototype.setHTML = function setHTML(...args) {
+		Element.prototype.setHTML.apply(this, args);
+	};
+
+	HTMLTemplateElement.prototype.setHTML = function setHTML(html, config) {
+		this.content.setHTML(html, config);
 	};
 }
 
 if (! (Document.parseHTML instanceof Function)) {
 	Document.parseHTML = function parseHTML(content, {
-		sanitizer: {
-			elements = els,
-			attributes = attrs,
-			comments = cmnts,
-			dataAttributes = dataAttrs,
-			...rest
-		} = sanitizerConfig,
+		elements,
+		attributes,
+		comments,
+		dataAttributes,
+		sanitizer,
+		...rest
 	} = {}) {
-		return parse(content, { sanitizer: { elements, attributes, comments, dataAttributes, ...rest }});
+		if (typeof sanitizer === 'object' && sanitizer !== null) {
+			return Document.parseHTML(content, sanitizer);
+		} else {
+			return parse(content, { elements, attributes, comments, dataAttributes, ...rest });
+		}
 	};
 }

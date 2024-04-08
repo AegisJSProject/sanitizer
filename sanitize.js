@@ -7,16 +7,28 @@ const ILLEGAL_PROTOCOLS = new Set(['javascript:', 'data:', 'file:', 'ftp:']);
 
 const policy = createPolicy('aegis-sanitizer#html', { createHTML: input => input });
 
-export function setHTML(el, content, { sanitizer = sanitizerConfig, allowInsecure = false } = {}) {
+export function setHTML(el, content, {
+	elements = sanitizerConfig.elements,
+	attributes = sanitizerConfig.attributes,
+	comments = sanitizerConfig.comments,
+	dataAttributes = sanitizerConfig.dataAttributes,
+	...rest
+} = sanitizerConfig, { allowInsecure = false } = {}) {
 	const tmp = document.createElement('template');
 	tmp.innerHTML = policy.createHTML(content);
-	sanitize(tmp.content, sanitizer, allowInsecure);
+	sanitize(tmp.content, { elements, attributes, comments, dataAttributes, ...rest }, allowInsecure);
 	el.replaceChildren(tmp.content);
 }
 
-export function parseHTML(content, { sanitizer = sanitizerConfig, allowInsecure = false } = {}) {
+export function parseHTML(content, {
+	elements = sanitizerConfig.elements,
+	attributes = sanitizerConfig.attributes,
+	comments = sanitizerConfig.comments,
+	dataAttributes = sanitizerConfig.dataAttributes,
+	...rest
+} = sanitizerConfig, { allowInsecure = false } = {}) {
 	const doc = new DOMParser().parseFromString(policy.createHTML(content), 'text/html');
-	sanitize(doc, sanitizer, allowInsecure);
+	sanitize(doc, { elements, attributes, comments, dataAttributes, ...rest }, allowInsecure);
 	return doc;
 }
 

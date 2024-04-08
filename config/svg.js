@@ -6,7 +6,7 @@ import { normalizeAttr, normalizeElement } from '@aegisjsproject/sanitizer/confi
  * @see https://developer.mozilla.org/en-US/docs/Web/SVG/Element
  */
 
-export const comments = false;
+export const comments = true;
 
 export const dataAttributes = true;
 
