@@ -10,6 +10,19 @@
         "ecmaVersion": 2022
     },
     "plugins": [],
+    "ignores": [
+        "/node_modules/",
+        "/_site/",
+        "/img/",
+        "/css/",
+        "/fonts/",
+        "/js/std-js/",
+        "/js/svg4everybody/",
+        "*.cjs",
+        "*.mjs",
+        "*.min.js",
+        "*.out.js"
+    ],
     "rules": {
         "indent": [
             2,
