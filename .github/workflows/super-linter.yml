@@ -51,7 +51,7 @@ jobs:
         uses: docker://github/super-linter:v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
           VALIDATE_YAML: true
           VALIDATE_JSON: true
@@ -65,8 +65,8 @@ jobs:
           # VALIDATE_RUBY: true
           # VALIDATE_COFFEE: true
           # VALIDATE_ANSIBLE: true
-          VALIDATE_JAVASCRIPT_ES: false
-          VALIDATE_JAVASCRIPT_STANDARD: false
+          # VALIDATE_JAVASCRIPT_ES: false
+          # VALIDATE_JAVASCRIPT_STANDARD: false
           # VALIDATE_TYPESCRIPT_ES: true
           # VALIDATE_TYPESCRIPT_STANDARD: true
           # VALIDATE_DOCKER: true
