@@ -3,7 +3,7 @@ import '@aegisjsproject/sanitizer';
 // import '@aegisjsproject/sanitizer/trust-policy.js?policy=default';
 import { sanitizer } from '@aegisjsproject/sanitizer/config/complete.js';
 
-trustedTypes.createPolicy('default', {
+const policy = trustedTypes.createPolicy('default', {
 	createHTML(input, {
 		elements = sanitizer.elements,
 		attributes = sanitizer.attributes,
@@ -69,7 +69,7 @@ attackURL.searchParams.set('html', `<p>Trying to inject encoded script:</p>
 <button style="background:url(javascript:alert('XSS!'))">Click Me (encoded background URL)</button>`);
 
 // Tests Sanitizer via `trustedTypes.defaultPolicy
-document.getElementById('container').innerHTML = `
+document.getElementById('container').innerHTML = policy.createHTML(`
 	<style>
 		h1::after {
 			display: inline-block;
@@ -139,7 +139,7 @@ document.getElementById('container').innerHTML = `
 	<div>
 		<h3>Search Injected</h3>
 		<div>${params.has('html') ? params.get('html') : 'No <code>?html=</code> search param given'}</div>
-		<form id="attack" method="GET" action="${location.href}">
+		<form id="attack" method="GET" action="${new URL(location.pathname, location.origin)}">
 			<fieldset>
 				<legend>Attack this Page</legend>
 				<div>
@@ -157,6 +157,6 @@ document.getElementById('container').innerHTML = `
 	<template id="tmp">
 		<h1 onclick="alert('Broken Template')">From Template</h1>
 	</template>
-`;
+`);
 
 document.getElementById('main').append(document.getElementById('tmp').content);
