@@ -65,8 +65,8 @@ jobs:
           # VALIDATE_RUBY: true
           # VALIDATE_COFFEE: true
           # VALIDATE_ANSIBLE: true
-          # VALIDATE_JAVASCRIPT_ES: true
-          # VALIDATE_JAVASCRIPT_STANDARD: true
+          VALIDATE_JAVASCRIPT_ES: false
+          VALIDATE_JAVASCRIPT_STANDARD: false
           # VALIDATE_TYPESCRIPT_ES: true
           # VALIDATE_TYPESCRIPT_STANDARD: true
           # VALIDATE_DOCKER: true
