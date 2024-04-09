@@ -5,7 +5,7 @@
 import { HTML as namespace } from '@aegisjsproject/sanitizer/namespaces.js';
 import { normalizeAttr, normalizeElement } from '@aegisjsproject/sanitizer/config-utils.js';
 import { attributes as globalAttrs } from '@aegisjsproject/sanitizer/config/global.js';
-export const comments = false;
+export const comments = true;
 
 export const dataAttributes = true;
 

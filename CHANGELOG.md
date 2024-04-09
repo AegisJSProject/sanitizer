@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.0.11] - 2024-04-08
+
+### Added
+- Add `setHTML` method on `DocumentFragment` (and therefore `ShadowRoot`)
+- Add support for setting config directly instead of via `sanitizer` property
+
+### Changed
+- `html`, `svg`, and `mathml` policies now default to `comments = true` (`base` has `comments = false`)
+
 ## [v0.0.10] - 2024-04-03
 
 ### Added

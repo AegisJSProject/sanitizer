@@ -2,7 +2,7 @@ import { MATHML as MATHNS } from '@aegisjsproject/sanitizer/namespaces.js';
 import { attributes as globalAttrs } from '@aegisjsproject/sanitizer/config/global.js';
 import { normalizeAttr, normalizeElement } from '@aegisjsproject/sanitizer/config-utils.js';
 
-export const comments = false;
+export const comments = true;
 
 export const dataAttributes = true;
 
