@@ -74,7 +74,7 @@ document.body.setHTML(`
     </div>
     <p>Bacon ipsum dolor amet pork belly frankfurter drumstick jowl brisket capicola short ribs. Cow chislic ham hock t-bone shoulder salami rump corned beef spare ribs prosciutto bresaola picanha drumstick. Swine tail pork belly ribeye beef kielbasa. Beef cupim ball tip pastrami spare ribs strip steak tongue salami venison. Venison cupim meatball strip steak meatloaf prosciutto buffalo frankfurter hamburger flank boudin.</p>
   </div>
-`, { sanitizer });
+`, sanitizer);
 ```
 
 ### Restricting Allowed Content (eg for comments)
@@ -90,7 +90,7 @@ fetch('https://api.example.com/comments')
   .then(comments => {
     document.querySelector('.comments').append(...comments.map(comment => {
       const el = document.createElement('div');
-      el.setHTML(comment.body, { sanitizer });
+      el.setHTML(comment.body, sanitizer);
       return el;
     }));
   });
@@ -108,5 +108,19 @@ const sanitizer = {
 
 document.querySelector('.container').setHTML(`
   <hello-world foo="bar"></hello-world>
-`, { sanitizer });
+`, sanitizer);
+```
+
+### Enforce Sanitization by default (on eg `innerHTML`, where supported)
+
+```
+if ('trustedTypes' in globalThis) {
+  trustedTypes.createPolicy('default', {
+    createHTML(input) {
+      const el = document.createElement('div');
+      el.setHTML(input);
+      return el.innerHTML;
+    }
+  });
+}
 ```

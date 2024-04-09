@@ -63,13 +63,13 @@ function normalizeAttrsConfig({ attributes, allowAttributes }, defaultNS) {
 }
 
 function normalizeCommentsConfig({ comments, allowComments }) {
-	if (typeof comments === 'boolean') {
-		return comments;
-	} else if (typeof allowComments === 'boolean') {
+	if (typeof allowComments === 'boolean') {
 		console.warn('Use of `allowComments` is deprecated. Please use `comments` instead.');
 		return allowComments;
+	} else if (typeof comments === 'boolean') {
+		return comments;
 	} else {
-		return false;
+		return true;
 	}
 }
 
@@ -83,16 +83,20 @@ export function normalizeConfig(config, {
 		allowElements,
 		allowAttributes,
 		comments = false,
+		allowComments,
 		dataAttributes = true,
 		...rest
 	} = config;
-	return {
+	const cfg = {
 		elements: normalizeElementsConfig({ elements, allowElements }, elementNS),
 		attributes: normalizeAttrsConfig({ attributes, allowAttributes }, attributeNS),
-		comments,
+		comments: comments || allowComments,
 		dataAttributes,
 		...rest,
 	};
+
+	console.log(cfg);
+	return cfg;
 }
 
 function convertAttrConfig({ attributes, allowAttributes }, defaultNS) {
@@ -119,22 +123,6 @@ export function convertConfig(config, {
 } = {}) {
 	if (typeof config !== 'object' || config === null) {
 		throw new TypeError('Sanitizer config must be an object.');
-	} else if (config.getConfiguration instanceof Function) {
-		console.warn('`Sanitzer` objects are deprecated and will be removed.');
-
-		const {
-			allowElements: elements,
-			allowAttributes: attributes,
-			allowComments: comments,
-			...rest
-		} = config.getConfiguration();
-
-		return Object.freeze({
-			elements: convertElementConfig({ elements }, elementNS),
-			attributes: convertAttrConfig({ attributes }, attributeNS),
-			comments,
-			...rest
-		});
 	} else {
 		return Object.freeze({
 			elements: convertElementConfig(config, elementNS),
