@@ -1,3 +1,4 @@
+<!-- markdownlint-disable -->
 # Changelog
 All notable changes to this project will be documented in this file.
 
@@ -6,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v0.0.11] - 2024-04-08
+## [v0.1.0] - 2024-04-08
 
 ### Added
 - Add `setHTML` method on `DocumentFragment` (and therefore `ShadowRoot`)

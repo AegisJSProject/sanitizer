@@ -71,37 +71,41 @@ jobs:
         uses: super-linter/super-linter@v6.3.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BRANCH: master
+          # DEFAULT_BRANCH: master
+          # DEFAULT_WORKSPACE:
+          # ANSIBLE_DIRECTORY:
+          # ACTIONS_RUNNER_DEBUG: true
           VALIDATE_ALL_CODEBASE: false
+          IGNORE_GENERATED_FILES: true
+          IGNORE_GITIGNORED_FILES: true
           SUPPRESS_POSSUM: true
           LOG_LEVEL: ERROR
           LINTER_RULES_PATH: './'
           EDITORCONFIG_FILE_NAME: '.editorconfig'
-          JAVASCRIPT_ES_CONFIG_FILE: 'eslint.config.js'
-          VALIDATE_YAML: true
-          IGNORE_GENERATED_FILES: true
-          IGNORE_GITIGNORED_FILES: true
-          # VALIDATE_JSON: false # Disabled since it uses eslint
-          VALIDATE_XML: true
-          VALIDATE_MD: true
+          # JAVASCRIPT_ES_CONFIG_FILE: 'eslint.config.js'
+          CSS_FILE_NAME: '.stylelintrc.json'
+
+          # Valate Languages - Uncomment to Enable
+          # JS/TS/JSON Disabled until ESLint in super-linter is updated
           VALIDATE_HTML: true
-          VALIDATE_BASH: true
-          VALIDATE_PERL: true
-          VALIDATE_PHP_BUILTIN: true
-          VALIDATE_PYTHON: true
-          VALIDATE_RUBY: true
-          VALIDATE_COFFEE: true
-          VALIDATE_ANSIBLE: true
-          # VALIDATE_JAVASCRIPT_ES: false
-          # VALIDATE_JAVASCRIPT_STANDARD: false
-          # VALIDATE_JSX: false
-          # VALIDATE_TYPESCRIPT_ES: false
-          # VALIDATE_TYPESCRIPT_STANDARD: false
-          # VALIDATE_TSX: false
-          VALIDATE_DOCKER: true
-          VALIDATE_GO: true
-          VALIDATE_TERRAFORM: true
           VALIDATE_CSS: true
-          ANSIBLE_DIRECTORY:
-          ACTIONS_RUNNER_DEBUG: true
-          DEFAULT_WORKSPACE:
+          # VALIDATE_JAVASCRIPT_ES: true
+          # VALIDATE_JAVASCRIPT_STANDARD: true
+          # VALIDATE_JSON: true
+          # VALIDATE_XML: true
+          VALIDATE_MARKDOWN: true
+          VALIDATE_YAML: true
+          # VALIDATE_TYPESCRIPT_ES: true
+          # VALIDATE_TYPESCRIPT_STANDARD: true
+          # VALIDATE_JSX: true
+          # VALIDATE_TSX: true
+          # VALIDATE_BASH: true
+          # VALIDATE_PERL: true
+          # VALIDATE_PHP_BUILTIN: true
+          # VALIDATE_PYTHON: true
+          # VALIDATE_RUBY: true
+          # VALIDATE_COFFEE: true
+          # VALIDATE_ANSIBLE: true
+          # VALIDATE_DOCKER: true
+          # VALIDATE_GO: true
+          # VALIDATE_TERRAFORM: true

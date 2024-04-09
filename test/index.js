@@ -1,7 +1,21 @@
 import '@aegisjsproject/trusted-types';
 import '@aegisjsproject/sanitizer';
-import '@aegisjsproject/sanitizer/trust-policy.js?policy=default';
+// import '@aegisjsproject/sanitizer/trust-policy.js?policy=default';
 import { sanitizer } from '@aegisjsproject/sanitizer/config/complete.js';
+
+const policy = trustedTypes.createPolicy('default', {
+	createHTML(input, {
+		elements = sanitizer.elements,
+		attributes = sanitizer.attributes,
+		comments = sanitzier.comments,
+		dataAttributes = sanitizer.dataAttribtes,
+		...rest
+	} = sanitizer) {
+		const el = document.createElement('div');
+		el.setHTML(input, { elements, attributes, comments, dataAttributes, ...rest });
+		return el.innerHTML;
+	},
+});
 
 const params = new URLSearchParams(location.search);
 
@@ -22,7 +36,40 @@ Promise.all([
 	}`),
 ]).then(sheets => document.adoptedStyleSheets = sheets);
 
-document.getElementById('container').innerHTML = trustedTypes.defaultPolicy.createHTML(`
+const attackURL = new URL(location.pathname, location.origin);
+attackURL.searchParams.set('html', `<p>Trying to inject encoded script:</p>
+<img src="icon.svg" alt="Onload attack" onload="alert('XSS')" />
+<img src="icon.svg
+	onload=alert('XSS!')" alt="Encoded onerror with null byte">
+<a href="javascript:alert('XSS!')">Click me (should be stripped)</a>
+<a href="javascript:alert('XSS!')">Click me (encoded javascript URL)</a>
+<a href="&#٣;avascript:alert('XSS!')">Click me (Arabic encoded javascript URL)</a>
+
+<p>Testing nested event handlers:</p>
+<button onclick="javascript:location.href='#' onmouseover='javascript:alert('XSS!')'>Click Me</button>
+<button onclick="javascript:location.href='#' onmouseover='javascript:alert('XSS!')'>Click Me (encoded nested)</button>
+
+<p>Testing character encoding confusion:</p>
+<a href="<javascript:alert('XSS!')">Click Me (lt symbol in hex)</a>
+<a href="<avascript:alert('XSS!')">Click Me (less than symbol in decimal)</a>
+<a href="x�alert('XSS!')">Click Me (null byte in image source)</a>
+
+<p>Testing self-XSS with unusual characters:</p>
+<svg onload="alert('XSS!')">
+	<circle cx="50" cy="50" r="40" fill="red" />
+</svg>
+<svg onload=alert('XSS!')>
+	<circle cx="50" cy="50" r="40" fill="red" />
+</svg>
+
+<p>Testing data attributes (should be allowed based on your config):</p>
+
+<p>Testing style injection:</p>
+<button style="background-image: url('javascript:alert('XSS!')')">Style Injection</button>
+<button style="background:url(javascript:alert('XSS!'))">Click Me (encoded background URL)</button>`);
+
+// Tests Sanitizer via `trustedTypes.defaultPolicy
+document.getElementById('container').innerHTML = policy.createHTML(`
 	<style>
 		h1::after {
 			display: inline-block;
@@ -45,7 +92,7 @@ document.getElementById('container').innerHTML = trustedTypes.defaultPolicy.crea
 		<a href="${URL.createObjectURL(file)}" download="${file.name}" target="_blank"><code>blob:</code> Download Link</a>
 		<a href="about:config"><code>about:config</code></a>
 		<a href="chrome://flags"><code>chrome://flags</code></a>
-		<a href="?html=%3Cp%3ETrying+to+inject+encoded+script%3A%3C%2Fp%3E%0A++%3Cimg+src%3D%22notanimage.jpg%250Aonerror%3Dalert%28%27XSS%21%27%29%22+alt%3D%22Encoded+onerror%22%3E%0A++%3Cimg+src%3D%22notanotherimage.png%0Aonerror%3Dalert%28%27XSS%21%27%29%22+alt%3D%22Encoded+onerror+with+null+byte%22%3E%0A++%3Ca+href%3D%22javascript%3Aalert%28%27XSS%21%27%29%22%3EClick+me+%28should+be+stripped%29%3C%2Fa%3E%0A++%3Ca+href%3D%22javascript%3Aalert%28%27XSS%21%27%29%22%3EClick+me+%28encoded+javascript+URL%29%3C%2Fa%3E%0A++%3Ca+href%3D%22%26%23%D9%A3%3Bavascript%3Aalert%28%27XSS%21%27%29%22%3EClick+me+%28Arabic+encoded+javascript+URL%29%3C%2Fa%3E%0A%0A%3Cp%3ETesting+nested+event+handlers%3A%3C%2Fp%3E%0A++%3Cbutton+onclick%3D%22javascript%3Alocation.href%3D%27%23%27+onmouseover%3D%27javascript%3Aalert%28%27XSS%21%27%29%27%3EClick+Me%3C%2Fbutton%3E%0A++%3Cbutton+onclick%3D%22javascript%3Alocation.href%3D%27%23%27+onmouseover%3D%27javascript%3Aalert%28%27XSS%21%27%29%27%3EClick+Me+%28encoded+nested%29%3C%2Fbutton%3E%0A%0A%3Cp%3ETesting+character+encoding+confusion%3A%3C%2Fp%3E%0A++%3Ca+href%3D%22%3Cjavascript%3Aalert%28%27XSS%21%27%29%22%3EClick+Me+%28lt+symbol+in+hex%29%3C%2Fa%3E%0A++%3Ca+href%3D%22%3Cavascript%3Aalert%28%27XSS%21%27%29%22%3EClick+Me+%28less+than+symbol+in+decimal%29%3C%2Fa%3E%0A++%3Ca+href%3D%22x%00alert%28%27XSS%21%27%29%22%3EClick+Me+%28null+byte+in+image+source%29%3C%2Fa%3E%0A++%3Cimg+src%3D%22x%EF%BF%BDalert%28%27XSS%21%27%29%22+alt%3D%22Image+with+null+byte%22%3E%0A%0A%3Cp%3ETesting+self-XSS+with+unusual+characters%3A%3C%2Fp%3E%0A++%3Cimg+src%3D%22notanimage.jpg%00alert%28%27XSS%21%27%29%22+alt%3D%22Image+with+null+byte%22%3E%0A++%3Cimg+src%3D%22notanotherimage.png%01%22+alt%3D%22Image+with+strange+character%22%3E%0A++%3Csvg+onload%3D%22alert%28%27XSS%21%27%29%22%3E%0A++++%3Ccircle+cx%3D%2250%22+cy%3D%2250%22+r%3D%2240%22+fill%3D%22red%22+%2F%3E%0A++%3C%2Fsvg%3E%0A++%3Csvg+onload%3Dalert%28%27XSS%21%27%29%3E%0A++++%3Ccircle+cx%3D%2250%22+cy%3D%2250%22+r%3D%2240%22+fill%3D%22red%22+%2F%3E%0A++%3C%2Fsvg%3E%0A%0A%3Cp%3ETesting+data+attributes+%28should+be+allowed+based+on+your+config%29%3A%3C%2Fp%3E%0A++%3Cdiv+data-harmless%3D%22true%22%3EThis+is+a+harmless+data+attribute%3C%2Fdiv%3E%0A++%3Cdiv+data-evil%3D%22true%22+style%3D%22color%3A+red%3B%22%3EThis+is+an+evil+data+attribute+%28color+might+be+stripped%29%3C%2Fdiv%3E%0A%0A%3Cp%3ETesting+style+injection%3A%3C%2Fp%3E%0A++%3Cbutton+style%3D%22background-image%3A+url%28%27javascript%3Aalert%28%27XSS%21%27%29%27%29%22%3EClick+Me%3C%2Fbutton%3E%0A++%3Cbutton+style%3D%22background%3Aurl%28javascript%3Aalert%28%27XSS%21%27%29%29%22%3EClick+Me+%28encoded+background+URL%29%3C%2Fbutton%3E">Test Sanitizer</a>
+		<a href="${attackURL}">Test Sanitizer</a>
 		<a href="./">Clear Test</a>
 	</nav>
 	<main id="main"></main>
@@ -92,7 +139,7 @@ document.getElementById('container').innerHTML = trustedTypes.defaultPolicy.crea
 	<div>
 		<h3>Search Injected</h3>
 		<div>${params.has('html') ? params.get('html') : 'No <code>?html=</code> search param given'}</div>
-		<form id="attack" method="GET" action="${location.href}">
+		<form id="attack" method="GET" action="${new URL(location.pathname, location.origin)}">
 			<fieldset>
 				<legend>Attack this Page</legend>
 				<div>
@@ -110,6 +157,6 @@ document.getElementById('container').innerHTML = trustedTypes.defaultPolicy.crea
 	<template id="tmp">
 		<h1 onclick="alert('Broken Template')">From Template</h1>
 	</template>
-`, sanitizer);
+`);
 
 document.getElementById('main').append(document.getElementById('tmp').content);

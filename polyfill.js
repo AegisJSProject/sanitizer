@@ -58,9 +58,14 @@ if (! (Element.prototype.setHTML instanceof Function)) {
 		sanitizer,
 		...rest
 	} = {}) {
+		/**
+		 * @todo Remove legacy support for v1.0.0
+		 */
 		if (typeof sanitizer === 'object' && sanitizer !== null) {
 			console.warn('Use of `sanitizer` in config is deprecated. Please set config directly.');
-			html(this, content, sanitizer);
+			html(this, content, sanitizer.getConfiguration instanceof Function
+				? sanitizer.getConfiguration()
+				: sanitizer);
 		} else {
 			html(this, content, { elements, attributes, comments, dataAttributes, ...rest });
 		}
@@ -84,8 +89,13 @@ if (! (Document.parseHTML instanceof Function)) {
 		sanitizer,
 		...rest
 	} = {}) {
+		/**
+		 * @todo Remove legacy support for v1.0.0
+		 */
 		if (typeof sanitizer === 'object' && sanitizer !== null) {
-			return Document.parseHTML(content, sanitizer);
+			return Document.parseHTML(content, sanitizer.getConfiguration instanceof Function
+				? sanitizer.getConfiguration()
+				: sanitizer);
 		} else {
 			return parse(content, { elements, attributes, comments, dataAttributes, ...rest });
 		}
