@@ -23,12 +23,21 @@ on:
     branches:
       - master
       - release/*
+    paths-ignore:
+      - '**/*.js' # Disable since ESLint is used and v9 config is incompatible
+      - '**/*.mjs'
+      - '**/*.cjs'
+      - '**/*.min.js'
 
 ###############
 # Set the Job #
 ###############
 jobs:
   build:
+    strategy:
+      fail-fast: false
+      # matrix:
+      #   language:
     # Name the Job
     name: Lint Code Base
     # Set the agent to run on
@@ -48,8 +57,9 @@ jobs:
       # Run Linter against code base #
       ################################
       - name: Lint Code Base
-        uses: docker://github/super-linter:v4
+        uses: docker://github/super-linter:v6
         env:
+          EDITORCONFIG_FILE_NAME: '.editorconfig'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
@@ -65,8 +75,8 @@ jobs:
           # VALIDATE_RUBY: true
           # VALIDATE_COFFEE: true
           # VALIDATE_ANSIBLE: true
-          # VALIDATE_JAVASCRIPT_ES: false
-          # VALIDATE_JAVASCRIPT_STANDARD: false
+          VALIDATE_JAVASCRIPT_ES: false
+          VALIDATE_JAVASCRIPT_STANDARD: false
           # VALIDATE_TYPESCRIPT_ES: true
           # VALIDATE_TYPESCRIPT_STANDARD: true
           # VALIDATE_DOCKER: true
