@@ -72,7 +72,12 @@ document.body.setHTML(`
         </svg>
       </button>
     </div>
-    <p>Bacon ipsum dolor amet pork belly frankfurter drumstick jowl brisket capicola short ribs. Cow chislic ham hock t-bone shoulder salami rump corned beef spare ribs prosciutto bresaola picanha drumstick. Swine tail pork belly ribeye beef kielbasa. Beef cupim ball tip pastrami spare ribs strip steak tongue salami venison. Venison cupim meatball strip steak meatloaf prosciutto buffalo frankfurter hamburger flank boudin.</p>
+    <p>Bacon ipsum dolor amet pork belly frankfurter drumstick jowl brisket capicola
+      short ribs.Cow chislic ham hock t-bone shoulder salami rump corned beef spare
+      ribs prosciutto bresaola picanha drumstick. Swine tail pork belly ribeye beef
+      kielbasa. Beef cupim ball tip pastrami spare ribs strip steak tongue salam
+      venison. Venison cupim meatball strip steak meatloaf prosciutto buffalo
+      frankfurter hamburger flank boudin.</p>
   </div>
 `, sanitizer);
 ```
@@ -96,7 +101,7 @@ fetch('https://api.example.com/comments')
   });
 ```
 
-### Adding to allowed elements / attributes:
+### Adding to allowed elements / attributes
 
 ```js
 import { elements, attributes } from '@aegisjsproject/sanitizer/config/html.js';
@@ -113,7 +118,7 @@ document.querySelector('.container').setHTML(`
 
 ### Enforce Sanitization by default (on eg `innerHTML`, where supported)
 
-```
+```js
 if ('trustedTypes' in globalThis) {
   trustedTypes.createPolicy('default', {
     createHTML(input) {
