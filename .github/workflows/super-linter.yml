@@ -65,7 +65,7 @@ jobs:
           EDITORCONFIG_FILE_NAME: '.editorconfig'
           JAVASCRIPT_ES_CONFIG_FILE: 'eslint.coonfig.js'
           VALIDATE_YAML: true
-          VALIDATE_JSON: true
+          VALIDATE_JSON: false # Disabled since it uses eslint
           VALIDATE_XML: true
           VALIDATE_MD: true
           VALIDATE_HTML: true
