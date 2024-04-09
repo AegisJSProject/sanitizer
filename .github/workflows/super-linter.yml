@@ -73,7 +73,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: master
           VALIDATE_ALL_CODEBASE: false
-          EDITORCONFIG_FILE_NAME: '.editorconfig'
+          EDITORCONFIG_FILE_NAME: '../../editorconfig'
           JAVASCRIPT_ES_CONFIG_FILE: 'eslint.coonfig.js'
           VALIDATE_YAML: true
           IGNORE_GENERATED_FILES: true
