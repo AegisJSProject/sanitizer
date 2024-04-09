@@ -59,30 +59,33 @@ jobs:
       - name: Lint Code Base
         uses: docker://github/super-linter:v6
         env:
-          EDITORCONFIG_FILE_NAME: '.editorconfig'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
+          VALIDATE_ALL_CODEBASE: false
+          EDITORCONFIG_FILE_NAME: '.editorconfig'
+          JAVASCRIPT_ES_CONFIG_FILE: 'eslint.coonfig.js'
           VALIDATE_YAML: true
           VALIDATE_JSON: true
-          # VALIDATE_XML: true
+          VALIDATE_XML: true
           VALIDATE_MD: true
-          # VALIDATE_HTML: true
-          # VALIDATE_BASH: true
-          # VALIDATE_PERL: true
-          # VALIDATE_PHP_BUILTIN: true
-          # VALIDATE_PYTHON: true
-          # VALIDATE_RUBY: true
-          # VALIDATE_COFFEE: true
-          # VALIDATE_ANSIBLE: true
+          VALIDATE_HTML: true
+          VALIDATE_BASH: true
+          VALIDATE_PERL: true
+          VALIDATE_PHP_BUILTIN: true
+          VALIDATE_PYTHON: true
+          VALIDATE_RUBY: true
+          VALIDATE_COFFEE: true
+          VALIDATE_ANSIBLE: true
           VALIDATE_JAVASCRIPT_ES: false
           VALIDATE_JAVASCRIPT_STANDARD: false
-          # VALIDATE_TYPESCRIPT_ES: true
-          # VALIDATE_TYPESCRIPT_STANDARD: true
-          # VALIDATE_DOCKER: true
-          # VALIDATE_GO: true
-          # VALIDATE_TERRAFORM: true
-          # VALIDATE_CSS: true
-          # ANSIBLE_DIRECTORY:
-          # ACTIONS_RUNNER_DEBUG: true
-          # DEFAULT_WORKSPACE:
+          VALIDATE_JSX: false
+          VALIDATE_TYPESCRIPT_ES: false
+          VALIDATE_TYPESCRIPT_STANDARD: false
+          VALIDATE_TSX: false
+          VALIDATE_DOCKER: true
+          VALIDATE_GO: true
+          VALIDATE_TERRAFORM: true
+          VALIDATE_CSS: true
+          ANSIBLE_DIRECTORY:
+          ACTIONS_RUNNER_DEBUG: true
+          DEFAULT_WORKSPACE:
