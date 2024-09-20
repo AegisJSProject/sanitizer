@@ -1,4 +1,4 @@
-import './sanitizer.mjs';
+import './sanitizer.js';
 import { setHTML as html, parseHTML as parse } from '@aegisjsproject/sanitizer/sanitize.js';
 
 if (! (Promise.withResolvers instanceof Function)) {
