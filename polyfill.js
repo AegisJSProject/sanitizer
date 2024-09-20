@@ -1,3 +1,4 @@
+import './sanitizer.mjs';
 import { setHTML as html, parseHTML as parse } from '@aegisjsproject/sanitizer/sanitize.js';
 
 if (! (Promise.withResolvers instanceof Function)) {
@@ -28,7 +29,11 @@ if (! (URL.canParse instanceof Function)) {
 
 if (! (URL.parse instanceof Function)) {
 	URL.parse = function parse(url, base) {
-		return URL.canParse(url, base) ? new URL(url, base) : null;
+		try {
+			return new URL(url, base);
+		} catch {
+			return null;
+		}
 	};
 }
 
@@ -62,10 +67,9 @@ if (! (Element.prototype.setHTML instanceof Function)) {
 		 * @todo Remove legacy support for v1.0.0
 		 */
 		if (typeof sanitizer === 'object' && sanitizer !== null) {
-			console.warn('Use of `sanitizer` in config is deprecated. Please set config directly.');
 			html(this, content, sanitizer.getConfiguration instanceof Function
 				? sanitizer.getConfiguration()
-				: sanitizer);
+				: { sanitizer });
 		} else {
 			html(this, content, { elements, attributes, comments, dataAttributes, ...rest });
 		}
@@ -95,7 +99,7 @@ if (! (Document.parseHTML instanceof Function)) {
 		if (typeof sanitizer === 'object' && sanitizer !== null) {
 			return Document.parseHTML(content, sanitizer.getConfiguration instanceof Function
 				? sanitizer.getConfiguration()
-				: sanitizer);
+				: { sanitizer });
 		} else {
 			return parse(content, { elements, attributes, comments, dataAttributes, ...rest });
 		}
