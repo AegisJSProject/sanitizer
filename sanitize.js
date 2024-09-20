@@ -12,11 +12,12 @@ export function setHTML(el, content, {
 	attributes = sanitizerConfig.attributes,
 	comments = sanitizerConfig.comments,
 	dataAttributes = sanitizerConfig.dataAttributes,
+	sanitizer,
 	...rest
 } = sanitizerConfig, { allowInsecure = false } = {}) {
 	const tmp = document.createElement('template');
 	tmp.innerHTML = policy.createHTML(content);
-	sanitize(tmp.content, { elements, attributes, comments, dataAttributes, ...rest }, allowInsecure);
+	sanitize(tmp.content, { elements, attributes, comments, dataAttributes, sanitizer, ...rest }, allowInsecure);
 	el.replaceChildren(tmp.content);
 }
 
@@ -25,10 +26,11 @@ export function parseHTML(content, {
 	attributes = sanitizerConfig.attributes,
 	comments = sanitizerConfig.comments,
 	dataAttributes = sanitizerConfig.dataAttributes,
+	sanitizer,
 	...rest
 } = sanitizerConfig, { allowInsecure = false } = {}) {
 	const doc = new DOMParser().parseFromString(policy.createHTML(content), 'text/html');
-	sanitize(doc, { elements, attributes, comments, dataAttributes, ...rest }, allowInsecure);
+	sanitize(doc, { elements, attributes, comments, dataAttributes, sanitizer, ...rest }, allowInsecure);
 	return doc;
 }
 
@@ -37,6 +39,7 @@ export function sanitize(node, config = sanitizerConfig, allowInsecure = false) 
 		throw new TypeError('Not a node.');
 	} else {
 		const converted = convertConfig(config);
+		console.log({ config, converted });
 		return sanitizeNode(node, converted, allowInsecure);
 	}
 }

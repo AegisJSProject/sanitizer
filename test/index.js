@@ -7,12 +7,13 @@ const policy = trustedTypes.createPolicy('default', {
 	createHTML(input, {
 		elements = sanitizer.elements,
 		attributes = sanitizer.attributes,
-		comments = sanitzier.comments,
+		comments = sanitizer.comments,
 		dataAttributes = sanitizer.dataAttribtes,
 		...rest
 	} = sanitizer) {
 		const el = document.createElement('div');
-		el.setHTML(input, { elements, attributes, comments, dataAttributes, ...rest });
+		const sanitizer = { elements, attributes, comments, dataAttributes, ...rest };
+		el.setHTML(input, { sanitizer });
 		return el.innerHTML;
 	},
 });

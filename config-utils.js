@@ -95,7 +95,6 @@ export function normalizeConfig(config, {
 		...rest,
 	};
 
-	console.log(cfg);
 	return cfg;
 }
 
@@ -123,6 +122,8 @@ export function convertConfig(config, {
 } = {}) {
 	if (typeof config !== 'object' || config === null) {
 		throw new TypeError('Sanitizer config must be an object.');
+	} else if (config.get instanceof Function) {
+		return convertConfig(config.get());
 	} else {
 		return Object.freeze({
 			elements: convertElementConfig(config, elementNS),
