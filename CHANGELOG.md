@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.2] - 2024-09-25
+
+### Fixed
+- Fix bad passing of sanitizer options and possible infinite recursion
+
 ## [v0.1.1] - 2024-09-19
 
 ### Changed

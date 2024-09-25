@@ -39,7 +39,6 @@ export function sanitize(node, config = sanitizerConfig, allowInsecure = false) 
 		throw new TypeError('Not a node.');
 	} else {
 		const converted = convertConfig(config);
-		console.log({ config, converted });
 		return sanitizeNode(node, converted, allowInsecure);
 	}
 }
