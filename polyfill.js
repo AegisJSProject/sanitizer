@@ -69,7 +69,7 @@ if (! (Element.prototype.setHTML instanceof Function)) {
 		if (typeof sanitizer === 'object' && sanitizer !== null) {
 			html(this, content, sanitizer.getConfiguration instanceof Function
 				? sanitizer.getConfiguration()
-				: { sanitizer });
+				: sanitizer);
 		} else {
 			html(this, content, { elements, attributes, comments, dataAttributes, ...rest });
 		}
@@ -99,7 +99,7 @@ if (! (Document.parseHTML instanceof Function)) {
 		if (typeof sanitizer === 'object' && sanitizer !== null) {
 			return Document.parseHTML(content, sanitizer.getConfiguration instanceof Function
 				? sanitizer.getConfiguration()
-				: { sanitizer });
+				: sanitizer);
 		} else {
 			return parse(content, { elements, attributes, comments, dataAttributes, ...rest });
 		}
