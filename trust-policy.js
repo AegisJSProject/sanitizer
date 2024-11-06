@@ -1,9 +1,19 @@
 import { createSanitizerPolicy } from '@aegisjsproject/sanitizer/trust.js';
 
-export const policy = createSanitizerPolicy(new URL(
-	document.currentScript instanceof HTMLScriptElement
-		? new URL(document.currentScript.src || document.baseURI)
-		: import.meta.url
-).searchParams.get('policy')?? undefined);
+function createPolicy() {
+	try {
+		const { searchParams } = new URL(import.meta.url);
+
+		if (searchParams.has('policy')) {
+			return createSanitizerPolicy(searchParams.get('policy'));
+		} else {
+			return trustedTypes.defaultPolicy ?? createSanitizerPolicy('default');
+		}
+	} catch {
+		return trustedTypes.defaultPolicy;
+	}
+}
+
+export const policy = createPolicy();
 
 export default policy;

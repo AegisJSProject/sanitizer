@@ -16,7 +16,7 @@ export function setHTML(el, content, {
 	...rest
 } = sanitizerConfig, { allowInsecure = false } = {}) {
 	const tmp = document.createElement('template');
-	tmp.innerHTML = policy.createHTML(content);
+	tmp.setHTMLUnsafe(policy.createHTML(content));
 	sanitize(tmp.content, { elements, attributes, comments, dataAttributes, sanitizer, ...rest }, allowInsecure);
 	el.replaceChildren(tmp.content);
 }

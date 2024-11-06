@@ -1,6 +1,6 @@
 {
   "name": "@aegisjsproject/sanitizer",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A polyfill for the Sanitizer API with various sanitizer configs",
   "keywords": [
     "aegis",
@@ -11,9 +11,9 @@
     "sanitizer-api"
   ],
   "type": "module",
-  "main": "./sanitizer.js",
-  "module": "./sanitizer.cjs",
-  "unpkg": "./polyfill.min.js",
+  "main": "./sanitizer.cjs",
+  "module": "./sanitizer.js",
+  "unpkg": "./polyfill.js",
   "exports": {
     ".": {
       "import": "./sanitizer.js",

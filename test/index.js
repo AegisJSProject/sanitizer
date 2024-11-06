@@ -1,22 +1,7 @@
 import '@aegisjsproject/trusted-types';
 import '@aegisjsproject/sanitizer';
-// import '@aegisjsproject/sanitizer/trust-policy.js?policy=default';
+import { policy } from '@aegisjsproject/sanitizer/trust-policy.js';
 import { sanitizer } from '@aegisjsproject/sanitizer/config/complete.js';
-
-const policy = trustedTypes.createPolicy('default', {
-	createHTML(input, {
-		elements = sanitizer.elements,
-		attributes = sanitizer.attributes,
-		comments = sanitizer.comments,
-		dataAttributes = sanitizer.dataAttribtes,
-		...rest
-	} = sanitizer) {
-		const el = document.createElement('div');
-		const sanitizer = { elements, attributes, comments, dataAttributes, ...rest };
-		el.setHTML(input, { sanitizer });
-		return el.innerHTML;
-	},
-});
 
 const params = new URLSearchParams(location.search);
 
@@ -158,6 +143,14 @@ document.getElementById('container').innerHTML = policy.createHTML(`
 	<template id="tmp">
 		<h1 onclick="alert('Broken Template')">From Template</h1>
 	</template>
-`);
+	<div id="shadow-test"></div>
+`, sanitizer);
 
 document.getElementById('main').append(document.getElementById('tmp').content);
+
+document.getElementById('shadow-test').setHTML(`<div>
+	<template shadowrootmode="closed">
+		<p part="greeting">Hello, <slot name="name">Somebody</slot>!</p>
+	</template>
+	<span slot="name">World</span>
+</div>`);

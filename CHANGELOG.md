@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.3] - 2024-11-06
+
+### Changed
+- Use `setHTMLUnsafe()` instead of `innerHTML` (supports declarative Shadow DOM)
+- Allow `shadowrootclonable` and `shadowrootserializable` in default HTML attribute list
+- Improve `trust-policy.js` module policy creation
+
+### Fixed
+- Fix `main` and `module`
+
 ## [v0.1.2] - 2024-09-25
 
 ### Fixed
