@@ -89,7 +89,7 @@
   "homepage": "https://github.com/AegisJSProject/sanitizer#readme",
   "devDependencies": {
     "@aegisjsproject/trusted-types": "^1.0.1",
-    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@shgysk8zer0/eslint-config": "^1.0.1",
     "eslint": "^9.0.0",
