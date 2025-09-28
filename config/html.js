@@ -74,6 +74,8 @@ export const attributes = Object.freeze([
 	'color',
 	'cols',
 	'colspan',
+	'command',
+	'commandfor',
 	'compact',
 	'content',
 	// 'contenteditable', //global
