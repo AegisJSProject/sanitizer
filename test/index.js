@@ -71,6 +71,7 @@ document.getElementById('container').innerHTML = policy.createHTML(`
 	<nav id="nav" class="flex row">
 		<button type="button" popovertarget="bacon" popovertargetaction="show" accesskey="b">Show Bacon Ipsum</button>
 		<button type="button" popovertarget="math" popovertargetaction="show" accesskey="p">Pythagorean theorem</button>
+		<button type="button" command="show-modal" commandfor="modal" accesskey="m">Show Modal</button>
 		<a href="#foo">Normal Link</a>
 		<a href="javascript:alert('javascript:')"><code>javascript:</code> Link</a>
 		<a href="file:${import.meta.url}"><code>file:</code> Link</a>
@@ -93,6 +94,11 @@ document.getElementById('container').innerHTML = policy.createHTML(`
 		</div>
 		<p>Bacon ipsum dolor amet pork belly frankfurter drumstick jowl brisket capicola short ribs. Cow chislic ham hock t-bone shoulder salami rump corned beef spare ribs prosciutto bresaola picanha drumstick. Swine tail pork belly ribeye beef kielbasa. Beef cupim ball tip pastrami spare ribs strip steak tongue salami venison. Venison cupim meatball strip steak meatloaf prosciutto buffalo frankfurter hamburger flank boudin.</p>
 	</div>
+	<dialog id="modal">
+		<p>This is a modal dialog via the <code>command</code> API</p>
+		<button type="button" command="close" commandfor="modal">Close</button>
+		<button type="button" command="request-close" commandfor="modal">Request Close</button>
+	</dialog>
 
 	<div popover="auto" id="math">
 		<div>
