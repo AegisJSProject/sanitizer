@@ -7,6 +7,7 @@ export function createPolicy(name, { createHTML: html, createScript: script, cre
 			createHTML(input, ...args) {
 				if (html instanceof Function) {
 					const result = html(input.toString(), ...args).toString();
+
 					return Object.freeze({
 						toString() {
 							return result;
@@ -19,6 +20,7 @@ export function createPolicy(name, { createHTML: html, createScript: script, cre
 			createScript(input, ...args) {
 				if (script instanceof Function) {
 					const result = script(input.toString(), ...args).toString();
+
 					return Object.freeze({
 						toString() {
 							return result;
@@ -31,6 +33,7 @@ export function createPolicy(name, { createHTML: html, createScript: script, cre
 			createScriptURL(input, ...args) {
 				if (scriptURL instanceof Function) {
 					const result = scriptURL(input.toString(), ...args).toString();
+
 					return Object.freeze({
 						toString() {
 							return result;
@@ -51,10 +54,17 @@ export function createSanitizerPolicy(name = 'aegis#html', { defaultConfig = {} 
 			attributes = defaultConfig.attributes,
 			comments = defaultConfig.comments,
 			dataAttributes = defaultConfig.dataAttributes,
+			sanitizer,
 			...rest
 		}  = defaultConfig) {
 			const el = document.createElement('div');
-			el.setHTML(input, { elements, attributes, comments, dataAttributes, ...rest });
+
+			if (typeof sanitizer === 'object') {
+				el.setHTML(input, { sanitizer });
+			} else {
+				el.setHTML(input, { sanitizer: { elements, attributes, comments, dataAttributes, ...rest }});
+
+			}
 			return el.innerHTML;
 		}
 	});

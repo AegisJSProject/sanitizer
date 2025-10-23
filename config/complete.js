@@ -2,9 +2,9 @@ import { elements as HTMLElements, attributes as HTMLAttributes } from '@aegisjs
 import { elements as SVGElements, attributes as SVGAttributes } from '@aegisjsproject/sanitizer/config/svg.js';
 import { elements as MathMLElements, attributes as MathMLAttributes } from '@aegisjsproject/sanitizer/config/mathml.js';
 
-export const elements = Object.freeze([...HTMLElements, ...SVGElements, ...MathMLElements]);
+export const elements = Object.freeze(Array.from(new Set(HTMLElements).union(new Set(SVGElements)).union(new Set(MathMLElements))));
 
-export const attributes = Object.freeze(Array.from(new Set([...HTMLAttributes, ...SVGAttributes, ...MathMLAttributes])));
+export const attributes = Object.freeze(Array.from(new Set(HTMLAttributes).union(new Set(SVGAttributes)).union(new Set(MathMLAttributes))));
 
 export const comments = true;
 

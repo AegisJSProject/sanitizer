@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.0] - 2025-10-23
+
+### Changed
+- Update to match the updated spec & Firefox Nightly implementation
+
 ## [v0.1.4] - 2025-09-28
 
 ### Changed

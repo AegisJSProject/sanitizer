@@ -31,6 +31,6 @@ export const attributes = Object.freeze([
 	'rspace', 'rquote', 'scriptlevel', 'scriptminsize', 'scriptsizemultiplier',
 	'selection', 'separator', 'separators', 'stretchy', 'subscriptshift', 'superscriptshift',
 	'symmetric', 'voffset', 'width', 'xmlns',
-].map(attr => normalizeAttr(attr)).concat(globalAttrs));
+].map(attr => normalizeAttr(attr, MATHNS)).concat(globalAttrs));
 
 export const sanitizer = Object.freeze({ elements, attributes, comments, dataAttributes });

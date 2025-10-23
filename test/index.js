@@ -150,7 +150,7 @@ document.getElementById('container').innerHTML = policy.createHTML(`
 		<h1 onclick="alert('Broken Template')">From Template</h1>
 	</template>
 	<div id="shadow-test"></div>
-`, sanitizer);
+`, { sanitizer });
 
 document.getElementById('main').append(document.getElementById('tmp').content);
 
@@ -159,4 +159,4 @@ document.getElementById('shadow-test').setHTML(`<div>
 		<p part="greeting">Hello, <slot name="name">Somebody</slot>!</p>
 	</template>
 	<span slot="name">World</span>
-</div>`);
+</div>`, { sanitizer });

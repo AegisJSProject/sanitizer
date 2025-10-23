@@ -15,7 +15,7 @@ export const dataAttributes = true;
  * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element
  */
 export const elements = Object.freeze([
-	'html', 'head', 'link', 'meta', 'body', 'address', 'article', 'aside', 'footer',
+	'html', 'head', 'link', 'meta', 'body', 'address', '`article', 'aside', 'footer',
 	'header', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup', 'main', 'nav', 'section',
 	'search', 'blockquote', 'cite', 'div', 'dd', 'dt', 'dl', 'figcaption', 'figure',
 	'hr', 'li', 'ol', 'ul', 'menu', 'p', 'pre', 'a', 'abbr', 'b', 'bdi', 'bdo', 'br',
@@ -136,8 +136,6 @@ export const attributes = Object.freeze([
 	// 'inputmode', //global
 	'integrity',
 	'invisible',
-	'invoketarget',
-	'invokeaction',
 	'is',
 	'ismap',
 	'keytype',
@@ -249,6 +247,6 @@ export const attributes = Object.freeze([
 	'webkitdirectory',
 	'width',
 	'wrap',
-].map(attr => normalizeAttr(attr)).concat(globalAttrs));
+].map(attr => normalizeAttr(attr, null)).concat(globalAttrs));
 
 export const sanitizer = Object.freeze({ comments, elements, attributes, dataAttributes });
