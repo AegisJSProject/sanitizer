@@ -77,7 +77,7 @@ export const attributes = Object.freeze([
 	{ name: 'title', namespace: XLINK },
 	{ name: 'type', namespace: XLINK },
 	{ name: 'space', namespace: XMLNS },
-].map(attr => normalizeAttr(attr)).concat(globalAttrs));
+].map(attr => normalizeAttr(attr, SVGNS))).concat(globalAttrs);
 
 export const sanitizer = Object.freeze({ elements, attributes, comments, dataAttributes });
 
