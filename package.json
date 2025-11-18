@@ -1,6 +1,6 @@
 {
   "name": "@aegisjsproject/sanitizer",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A polyfill for the Sanitizer API with various sanitizer configs",
   "keywords": [
     "aegis",
@@ -92,6 +92,7 @@
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@shgysk8zer0/eslint-config": "^1.0.1",
+    "@shgysk8zer0/polyfills": "^0.5.0",
     "eslint": "^9.0.0",
     "http-server": "^14.1.1",
     "rollup": "^4.13.0"

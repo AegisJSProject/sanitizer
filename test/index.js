@@ -1,5 +1,4 @@
-import '@aegisjsproject/trusted-types';
-import '@aegisjsproject/sanitizer';
+import '@shgysk8zer0/polyfills/browser.min.js';
 import { policy } from '@aegisjsproject/sanitizer/trust-policy.js';
 import { sanitizer } from '@aegisjsproject/sanitizer/config/complete.js';
 
