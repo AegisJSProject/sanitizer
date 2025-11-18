@@ -29,7 +29,7 @@ export const elements = Object.freeze([
 	'strike', 'selectmenu', 'center',
 ].map(el => normalizeElement(el, namespace)));
 
-export const attributes = Object.freeze([
+export const htmlAttributes = Object.freeze([
 	'abbr',
 	'accept',
 	'accept-charset',
@@ -247,6 +247,8 @@ export const attributes = Object.freeze([
 	'webkitdirectory',
 	'width',
 	'wrap',
-].map(attr => normalizeAttr(attr, null)).concat(globalAttrs));
+].map(attr => normalizeAttr(attr, null)));
+
+export const attributes = Object.freeze(htmlAttributes.concat(globalAttrs));
 
 export const sanitizer = Object.freeze({ comments, elements, attributes, dataAttributes });

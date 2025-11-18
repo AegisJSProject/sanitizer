@@ -20,7 +20,7 @@ export const elements = Object.freeze([
 /**
  * @see https://developer.mozilla.org/en-US/docs/Web/MathML/Attribute
  */
-export const attributes = Object.freeze([
+export const mathAttributes = Object.freeze([
 	'accent', 'accentunder', 'actiontype', 'align',
 	'background', 'close', 'color', 'columnalign', 'columnlines', 'columnspacing',
 	'columnspan', 'denomalign', 'depth', 'dir', 'display', 'displaystyle', 'fence',
@@ -31,6 +31,8 @@ export const attributes = Object.freeze([
 	'rspace', 'rquote', 'scriptlevel', 'scriptminsize', 'scriptsizemultiplier',
 	'selection', 'separator', 'separators', 'stretchy', 'subscriptshift', 'superscriptshift',
 	'symmetric', 'voffset', 'width', 'xmlns',
-].map(attr => normalizeAttr(attr, MATHNS)).concat(globalAttrs));
+].map(attr => normalizeAttr(attr, MATHNS)));
+
+export const attributes = Object.freeze(mathAttributes.concat(globalAttrs));
 
 export const sanitizer = Object.freeze({ elements, attributes, comments, dataAttributes });
