@@ -2,11 +2,11 @@ import { normalizeAttr } from '@aegisjsproject/sanitizer/config-utils.js';
 
 export const attributes = Object.freeze([
 	'accesskey', 'autocapitalize', 'autofocus', 'class', 'contenteditable',
-	'dir', 'draggable', 'enterkeyhint', 'exportparts', 'hidden', 'id',
+	'dir', 'draggable', 'enterkeyhint', 'exportparts', 'height', 'hidden', 'id',
 	'inert', 'inputmode', 'itemid', 'itemprop', 'itemref',
 	'itemscope', 'itemtype', 'lang', 'part', 'popover',
 	'slot', 'spellcheck', 'tabindex', 'title', 'translate',
-	'virtualkeyboardpolicy',
+	'virtualkeyboardpolicy', 'width',
 	/**
 	 * Aria-Attributes
 	 * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/
