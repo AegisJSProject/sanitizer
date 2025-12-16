@@ -22,7 +22,7 @@ export const elements = Object.freeze([
 	'radialGradient', 'rect', 'script', 'set', 'stop', 'style', 'svg', 'switch',
 	'symbol', 'text', 'textPath', 'title', 'tspan', 'view', 'missing-glyph', 'font',
 	'font-face', 'font-face-format', 'font-face-name', 'font-face-src',
-	'font-face-uri', 'hkern', 'vkern', 'glyph', 'glyphRef', 'tref', 'cursor', 'use',
+	'font-face-uri', 'hkern', 'vkern', 'glyph', 'glyphRef', 'tref', 'cursor',
 ].map(el => normalizeElement(el, SVGNS)));
 
 export const svgAttributes = Object.freeze([
