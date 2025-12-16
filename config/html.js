@@ -25,7 +25,7 @@ export const elements = Object.freeze([
 	'source', 'canvas', 'caption', 'col', 'colgroup', 'table', 'tbody', 'tr', 'td',
 	'tfoot', 'th', 'thead', 'button', 'datalist', 'option', 'fieldset', 'label',
 	'form', 'input', 'legend', 'meter', 'optgroup', 'select', 'output', 'progress',
-	'textarea', 'details', 'summary', 'dialog', 'slot', 'template', 'dir',
+	'textarea', 'details', 'summary', 'dialog', 'slot', 'dir', 'template',
 	'strike', 'selectmenu', 'center',
 ].map(el => normalizeElement(el, namespace)));
 
@@ -117,7 +117,7 @@ export const htmlAttributes = Object.freeze([
 	// 'frame',
 	'frameborder',
 	'headers',
-	'height',
+	// 'height', //global
 	// 'hidden', //global
 	'high',
 	'href',
@@ -245,7 +245,7 @@ export const htmlAttributes = Object.freeze([
 	'vlink',
 	'vspace',
 	'webkitdirectory',
-	'width',
+	// 'width', //global
 	'wrap',
 ].map(attr => normalizeAttr(attr, null)));
 
