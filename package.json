@@ -1,6 +1,6 @@
 {
   "name": "@aegisjsproject/sanitizer",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "A polyfill for the Sanitizer API with various sanitizer configs",
   "keywords": [
     "aegis",

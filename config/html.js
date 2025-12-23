@@ -1,6 +1,6 @@
 /**
- * @copyright 2023-2024 Chris Zuber <admin@kernvalley.us>
- * @see https://wicg.github.io/sanitizer-api/#default-configuration-dictionary
+ * @copyright 2023-2025 Chris Zuber <admin@kernvalley.us>
+ * @see https://wicg.github.io/sanitizer-api/#built-in-safe-default-configuration
  */
 import { HTML as namespace } from '@aegisjsproject/sanitizer/namespaces.js';
 import { normalizeAttr, normalizeElement } from '@aegisjsproject/sanitizer/config-utils.js';
@@ -15,7 +15,7 @@ export const dataAttributes = true;
  * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element
  */
 export const elements = Object.freeze([
-	'html', 'head', 'link', 'meta', 'body', 'address', '`article', 'aside', 'footer',
+	'html', 'head', 'link', 'meta', 'body', 'address', 'article', 'aside', 'footer',
 	'header', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup', 'main', 'nav', 'section',
 	'search', 'blockquote', 'cite', 'div', 'dd', 'dt', 'dl', 'figcaption', 'figure',
 	'hr', 'li', 'ol', 'ul', 'menu', 'p', 'pre', 'a', 'abbr', 'b', 'bdi', 'bdo', 'br',
