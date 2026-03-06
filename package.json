@@ -90,7 +90,7 @@
   "devDependencies": {
     "@aegisjsproject/trusted-types": "^1.0.1",
     "@rollup/plugin-node-resolve": "^16.0.0",
-    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-terser": "^1.0.0",
     "@shgysk8zer0/eslint-config": "^1.0.1",
     "@shgysk8zer0/polyfills": "^0.6.0",
     "eslint": "^10.0.0",
