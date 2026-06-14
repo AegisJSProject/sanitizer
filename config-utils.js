@@ -1,9 +1,54 @@
 import { HTML as HTMLNS } from '@aegisjsproject/sanitizer/namespaces.js';
 
+/**
+ * @typedef {Readonly<{name: string, namespace?: string|null}>} SanitizerElementNamespace
+ */
+
+/**
+ * @typedef {Readonly<{name: string, namespace?: string|null}>} SanitizerAttributeNamespace
+ */
+
+/**
+ * @typedef {string|SanitizerAttributeNamespace} SanitizerAttribute
+ */
+
+/**
+ * @typedef {SanitizerElementNamespace & Readonly<{
+ * attributes?: SanitizerAttribute[],
+ * removeAttributes?: SanitizerAttribute[]
+ * }>} SanitizerElementNamespaceWithAttributes
+ */
+
+/**
+ * @typedef {string|SanitizerElementNamespace} SanitizerElement
+ */
+
+/**
+ * @typedef {string|SanitizerElementNamespaceWithAttributes} SanitizerElementWithAttributes
+ */
+
+/**
+ * @typedef {Readonly<{
+ * elements?: SanitizerElementWithAttributes[],
+ * removeElements?: SanitizerElement[],
+ * replaceWithChildrenElements?: SanitizerElement[],
+ * attributes?: SanitizerAttribute[],
+ * removeAttributes?: SanitizerAttribute[],
+ * comments?: boolean,
+ * dataAttributes?: boolean
+ * }>} SanitizerConfig
+ */
+
 export const EVENT_ATTRS = new Set(('HTMLElement' in globalThis
 	? Object.keys(HTMLElement.prototype) : [])
 	.filter(name => name.startsWith('on')));
 
+/**
+ *
+ * @param {string|object} opt
+ * @param {string?} defaultNS
+ * @returns {SanitizerElement}
+ */
 export function normalizeElement(opt, defaultNS = HTMLNS) {
 	if (typeof opt === 'string') {
 		return Object.freeze({ name: opt, namespace: defaultNS });
@@ -19,6 +64,14 @@ export function normalizeElement(opt, defaultNS = HTMLNS) {
 	}
 }
 
+/**
+ *
+ * @param {object} els
+ * @param {Array} [els.elements]
+ * @param {Array} [els.allowElements]
+ * @param {string} defaultNS
+ * @returns {SanitizerElementNamespace[]}
+ */
 function normalizeElementsConfig({ elements, allowElements }, defaultNS = HTMLNS) {
 	if (Array.isArray(allowElements)) {
 		console.warn('Use of `allowElements` is deprecated. Please use `elements` instead.');
@@ -30,6 +83,12 @@ function normalizeElementsConfig({ elements, allowElements }, defaultNS = HTMLNS
 	}
 }
 
+/**
+ *
+ * @param {string} opt
+ * @param {string?} defaultNS
+ * @returns {SanitizerAttributeNamespace}
+ */
 export function normalizeAttr(opt, defaultNS) {
 	if (typeof opt === 'string') {
 		return Object.freeze({ name: opt, namespace: defaultNS });

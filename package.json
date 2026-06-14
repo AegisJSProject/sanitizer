@@ -88,13 +88,16 @@
   },
   "homepage": "https://github.com/AegisJSProject/sanitizer#readme",
   "devDependencies": {
-    "@aegisjsproject/trusted-types": "^1.0.1",
+    "@aegisjsproject/trusted-types": "^1.0.2",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^1.0.0",
-    "@shgysk8zer0/eslint-config": "^1.0.1",
-    "@shgysk8zer0/polyfills": "^0.6.0",
-    "eslint": "^10.0.0",
+    "@shgysk8zer0/eslint-config": "^1.1.0",
+    "@shgysk8zer0/polyfills": "^0.8.4",
+    "eslint": "^10.5.0",
     "http-server": "^14.1.1",
-    "rollup": "^4.13.0"
+    "rollup": "^4.53.2"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true
   }
 }
