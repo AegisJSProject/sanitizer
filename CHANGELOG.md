@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.3.0] - 2026-06-14
+
+## Added
+- Add Security policy
+- Add npm config to harden installs
+
+### Changed
+- Update Workflows with permissions
+- Update contributiing guidelines
+
 ## [v0.2.4] - 2025-12-23
 
 ### Fixed
